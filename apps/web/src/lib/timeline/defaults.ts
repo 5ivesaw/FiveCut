@@ -39,6 +39,8 @@ const defaultTextElement: Omit<TextElement, "id"> = {
 	fontWeight: "normal",
 	fontStyle: "normal",
 	textDecoration: "none",
+	outlineColor: "#000000",
+	outlineWidth: 0,
 	letterSpacing: defaultTextLetterSpacing,
 	lineHeight: defaultTextLineHeight,
 	duration: DEFAULT_NEW_ELEMENT_DURATION,

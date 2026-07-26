@@ -29,6 +29,10 @@ import { DEFAULTS } from "@/lib/timeline/defaults";
 import { getElementFontFamilies } from "@/lib/timeline/element-utils";
 import { getRaisedProjectFpsForImportedMedia } from "@/lib/fps/utils";
 import type { MediaAsset } from "@/lib/media/types";
+import {
+	importFiveCutProject as buildImportedFiveCutProject,
+	type FiveCutImportResult,
+} from "@/lib/agent/import-project";
 
 export interface MigrationState {
 	isMigrating: boolean;
@@ -123,6 +127,50 @@ export class ProjectManager {
 			toast.error("Failed to save new project");
 			throw error;
 		}
+	}
+
+	async importFiveCutProject({
+		rawDocument,
+		files,
+	}: {
+		rawDocument: unknown;
+		files: File[];
+	}): Promise<
+		Pick<FiveCutImportResult, "document" | "warnings"> & { projectId: string }
+	> {
+		await this.ensureStorageMigrations();
+
+		const imported = await buildImportedFiveCutProject({
+			rawDocument,
+			files,
+		});
+		const projectId = imported.project.metadata.id;
+		const existingProject = await storageService.loadProject({ id: projectId });
+		if (existingProject) {
+			throw new Error(
+				`A project with ID ${projectId} already exists. Change project.id in the AI project before importing it again.`,
+			);
+		}
+
+		try {
+			for (const mediaAsset of imported.mediaAssets) {
+				await storageService.saveMediaAsset({ projectId, mediaAsset });
+			}
+			await storageService.saveProject({ project: imported.project });
+			this.updateMetadata(imported.project);
+		} catch (error) {
+			await Promise.allSettled([
+				storageService.deleteProjectMedia({ projectId }),
+				storageService.deleteProject({ id: projectId }),
+			]);
+			throw error;
+		}
+
+		return {
+			projectId,
+			document: imported.document,
+			warnings: imported.warnings,
+		};
 	}
 
 	async loadProject({ id }: { id: string }): Promise<void> {

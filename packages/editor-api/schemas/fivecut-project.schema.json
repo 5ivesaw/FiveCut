@@ -211,10 +211,7 @@
             "blur",
             "sharpen",
             "pixelate",
-            "film-grain",
-            "vignette",
-            "grayscale",
-            "crop"
+            "film-grain"
           ]
         },
         "enabled": { "type": "boolean", "default": true },

@@ -65,6 +65,7 @@ import {
 import { DeleteProjectDialog } from "@/components/editor/dialogs/delete-project-dialog";
 import { ProjectInfoDialog } from "@/components/editor/dialogs/project-info-dialog";
 import { RenameProjectDialog } from "@/components/editor/dialogs/rename-project-dialog";
+import { ImportAiProjectDialog } from "@/components/editor/dialogs/import-ai-project-dialog";
 import { cn } from "@/utils/ui";
 import { DEFAULT_LOGO_URL } from "@/lib/site/brand";
 const formatProjectDuration = ({
@@ -199,6 +200,7 @@ function ProjectsHeader() {
 
 				<div className="flex items-center gap-3 md:gap-4">
 					<SearchBar className="hidden md:block" />
+					<ImportAiProjectDialog />
 					<NewProjectButton />
 				</div>
 			</div>

@@ -162,6 +162,8 @@ export interface TextElement extends BaseTimelineElement {
 	fontWeight: "normal" | "bold";
 	fontStyle: "normal" | "italic";
 	textDecoration: "none" | "underline" | "line-through";
+	outlineColor?: string;
+	outlineWidth?: number;
 	letterSpacing?: number;
 	lineHeight?: number;
 	hidden?: boolean;

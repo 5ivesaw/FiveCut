@@ -2,16 +2,14 @@ import { BaseNode } from "./base-node";
 import type { TextElement } from "@/lib/timeline";
 import type { EffectPass } from "@/lib/effects/types";
 import type { Transform } from "@/lib/rendering";
-import {
-	CORNER_RADIUS_MAX,
-	CORNER_RADIUS_MIN,
-} from "@/lib/text/background";
+import { CORNER_RADIUS_MAX, CORNER_RADIUS_MIN } from "@/lib/text/background";
 import {
 	drawTextDecoration,
 	getTextBackgroundRect,
 	setCanvasLetterSpacing,
 } from "@/lib/text/layout";
 import type { MeasuredTextElement } from "@/lib/text/measure-element";
+import { FONT_SIZE_SCALE_REFERENCE } from "@/lib/text/typography";
 import { clamp } from "@/utils/math";
 
 export type TextNodeParams = TextElement & {
@@ -113,6 +111,16 @@ export function renderTextToContext({
 
 	for (let index = 0; index < lineCount; index++) {
 		const lineY = index * lineHeightPx - block.visualCenterOffset;
+		const outlineWidth =
+			(node.params.outlineWidth ?? 0) *
+			(node.params.canvasHeight / FONT_SIZE_SCALE_REFERENCE);
+		if (outlineWidth > 0) {
+			ctx.lineJoin = "round";
+			ctx.miterLimit = 2;
+			ctx.lineWidth = outlineWidth * 2;
+			ctx.strokeStyle = node.params.outlineColor ?? "#000000";
+			ctx.strokeText(lines[index], 0, lineY);
+		}
 		ctx.fillText(lines[index], 0, lineY);
 		drawTextDecoration({
 			ctx,

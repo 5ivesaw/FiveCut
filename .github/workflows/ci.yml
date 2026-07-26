@@ -54,12 +54,50 @@ jobs:
       - name: Test
         run: cargo test --workspace --locked
 
+  wasm:
+    name: Browser WebAssembly
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: wasm
+      - name: Install verified wasm-pack
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/wasm-pack.tar.gz"
+          destination="${RUNNER_TEMP}/wasm-pack"
+          curl --fail --location --retry 3 \
+            "https://github.com/wasm-bindgen/wasm-pack/releases/download/v0.15.0/wasm-pack-v0.15.0-x86_64-unknown-linux-musl.tar.gz" \
+            --output "${archive}"
+          echo "c09f971ecaed9a2efc80fdcea7a00ef6b53c7fadc8c57d1f61b53a6aa66b668a  ${archive}" \
+            | sha256sum --check -
+          mkdir -p "${destination}"
+          tar --extract --gzip --file "${archive}" \
+            --directory "${destination}" --strip-components=1
+          echo "${destination}" >> "${GITHUB_PATH}"
+      - name: Build local editor WebAssembly
+        run: wasm-pack build rust/wasm --target bundler --out-dir pkg --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fivecut-wasm
+          path: rust/wasm/pkg
+          if-no-files-found: error
+
   web:
     name: Web editor
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    needs: wasm
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: fivecut-wasm
+          path: rust/wasm/pkg
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.18
