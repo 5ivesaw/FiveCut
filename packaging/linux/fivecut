@@ -18,4 +18,6 @@ if [ "$(id -u)" -eq 0 ]; then
     exec "$electron" --no-sandbox "$app_dir" "$@"
 fi
 
-exec "$electron" "$app_dir" "$@"
+# Portable archives cannot ship a root-owned setuid helper. Chromium falls
+# back to the unprivileged user-namespace sandbox on supported Linux systems.
+exec "$electron" --disable-setuid-sandbox "$app_dir" "$@"
