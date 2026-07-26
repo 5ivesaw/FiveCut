@@ -1,6 +1,8 @@
-# opencut-wasm
+# FiveCut WebAssembly core
 
-Shared video editor logic compiled to WebAssembly. Used by the [OpenCut](https://github.com/opencut/opencut) web app.
+Shared video-editor logic compiled to WebAssembly for FiveCut. The package keeps
+the `opencut-wasm` compatibility name while the upstream migration remains in
+progress.
 
 ## Install
 
@@ -17,11 +19,13 @@ const ticks = mediaTimeFromSeconds(1.5);
 const label = formatTimecode({ ticks });
 ```
 
-All exports are documented in the [TypeScript definitions](./opencut_wasm.d.ts).
+The generated `pkg` directory includes TypeScript declarations for every
+export.
 
 ## Source
 
-Functions are implemented in Rust under [`rust/crates/`](../crates/). This package is the compiled WebAssembly output — do not edit it directly.
+Functions are implemented in Rust under [`rust/crates/`](../crates/). This
+package is compiled output; do not edit it directly.
 
 ## Local development
 

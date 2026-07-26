@@ -174,6 +174,24 @@ class AgentContractTests(unittest.TestCase):
         self.assertTrue(errors(issues))
         self.assertTrue(any(issue.code == "MISSING_ASSET" for issue in issues))
 
+    def test_freeze_frame_requires_an_in_range_video_timestamp(self) -> None:
+        project_path = self._project()
+        project = load_json(project_path)
+        clip = project["tracks"][0]["clips"][0]
+        clip["freezeFrameSourceTime"] = 0.5
+        issues = validate_project(project, project_path=project_path, check_files=False)
+        self.assertTrue(
+            any(issue.code == "FREEZE_FRAME_REQUIRES_VIDEO" for issue in issues)
+        )
+
+        project["assets"][0]["kind"] = "video"
+        project["assets"][0]["duration"] = 1
+        clip["freezeFrameSourceTime"] = 1
+        issues = validate_project(project, project_path=project_path, check_files=False)
+        self.assertTrue(
+            any(issue.code == "FREEZE_FRAME_OUT_OF_RANGE" for issue in issues)
+        )
+
 
 @unittest.skipUnless(
     shutil.which("ffmpeg") and shutil.which("ffprobe"),
@@ -250,6 +268,17 @@ class AgentRenderTests(unittest.TestCase):
                     "interpolation": "ease-in-out",
                 },
             ]
+            project["tracks"][0]["clips"].append(
+                {
+                    "id": "clip:freeze",
+                    "type": "media",
+                    "assetId": video_clip["assetId"],
+                    "start": 1,
+                    "duration": 1,
+                    "freezeFrameSourceTime": 0.5,
+                    "includeSourceAudio": False,
+                }
+            )
             project["tracks"][2]["clips"].append(
                 {
                     "id": "caption:test",

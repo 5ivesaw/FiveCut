@@ -49,6 +49,7 @@ import { OcRippleIcon } from "@/components/icons";
 import { GraphEditorPopover } from "./graph-editor/popover";
 import { PopoverTrigger } from "@/components/ui/popover";
 import { useGraphEditorController } from "./graph-editor/use-controller";
+import { toast } from "sonner";
 
 export function TimelineToolbar({
 	zoomLevel,
@@ -92,6 +93,7 @@ function ToolbarLeftSection() {
 	);
 	const { selectedElements } = useElementSelection();
 	const graphEditor = useGraphEditorController();
+	const currentTime = useEditor((e) => e.playback.getCurrentTime());
 	const isCurrentlyBookmarked = useEditor((e) =>
 		e.scenes.isBookmarked({ time: e.playback.getCurrentTime() }),
 	);
@@ -127,6 +129,50 @@ function ToolbarLeftSection() {
 		isSourceAudioSeparated({
 			element: selectedElement.element,
 		});
+	const selectedVideo =
+		selectedElement?.element.type === "video" ? selectedElement.element : null;
+	const canInsertFreezeFrame =
+		!!selectedVideo &&
+		selectedVideo.freezeFrameSourceTime === undefined &&
+		selectedMediaAsset?.type === "video" &&
+		currentTime >= selectedVideo.startTime &&
+		currentTime < selectedVideo.startTime + selectedVideo.duration;
+	const freezeFrameTooltip = (() => {
+		if (!selectedElement) return "Select one video clip to freeze";
+		if (!selectedVideo || selectedMediaAsset?.type !== "video") {
+			return "Freeze frame is available for video clips";
+		}
+		if (selectedVideo.freezeFrameSourceTime !== undefined) {
+			return "This clip is already a freeze frame";
+		}
+		if (
+			currentTime < selectedVideo.startTime ||
+			currentTime >= selectedVideo.startTime + selectedVideo.duration
+		) {
+			return "Move the playhead over the selected clip";
+		}
+		return "Insert 2-second freeze frame";
+	})();
+
+	const handleFreezeFrame = ({ event }: { event: React.MouseEvent }) => {
+		event.stopPropagation();
+		if (!selectedElement || !canInsertFreezeFrame) return;
+
+		const result = editor.timeline.insertFreezeFrame({
+			element: {
+				trackId: selectedElement.track.id,
+				elementId: selectedElement.element.id,
+			},
+			atTime: currentTime,
+		});
+		if (!result.ok) {
+			toast.error("Could not insert freeze frame");
+			return;
+		}
+
+		editor.playback.seek({ time: currentTime });
+		toast.success("2-second freeze frame inserted");
+	};
 
 	const handleAction = ({
 		action,
@@ -185,9 +231,9 @@ function ToolbarLeftSection() {
 
 				<ToolbarButton
 					icon={<HugeiconsIcon icon={SnowIcon} />}
-					tooltip="Freeze frame (coming soon)"
-					disabled={true}
-					onClick={({ event: _event }) => {}}
+					tooltip={freezeFrameTooltip}
+					disabled={!canInsertFreezeFrame}
+					onClick={handleFreezeFrame}
 				/>
 
 				<ToolbarButton

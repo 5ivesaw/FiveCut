@@ -97,6 +97,7 @@ const clip = z
 		duration: positiveTime,
 		sourceIn: time.optional(),
 		sourceDuration: positiveTime.optional(),
+		freezeFrameSourceTime: time.optional(),
 		speed: z.number().finite().min(0.05).max(20).optional(),
 		opacity: z.number().finite().min(0).max(1).optional(),
 		volumeDb: z.number().finite().min(-96).max(24).optional(),
@@ -117,6 +118,13 @@ const clip = z
 				code: "custom",
 				path: ["assetId"],
 				message: "Media clips require assetId.",
+			});
+		}
+		if (value.freezeFrameSourceTime !== undefined && value.type !== "media") {
+			context.addIssue({
+				code: "custom",
+				path: ["freezeFrameSourceTime"],
+				message: "Only media clips can hold a source frame.",
 			});
 		}
 		if (

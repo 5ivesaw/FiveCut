@@ -165,6 +165,7 @@ def compatibility_report(
                     visual_count += 1
                 if (
                     not track.get("muted", False)
+                    and clip.get("freezeFrameSourceTime") is None
                     and (
                         track.get("kind") == "audio"
                         or (
@@ -267,6 +268,7 @@ def compatibility_report(
         "capabilities": {
             "media": ["video", "audio", "image"],
             "generated": ["text", "caption", "shape"],
+            "freezeFrame": True,
             "transitions": [
                 "none",
                 "fade",
@@ -502,12 +504,25 @@ def _visual_chain(
         f"if(gte(iw/ih,{canvas_width}/{canvas_height}),"
         f"{canvas_width}*ih/iw,{canvas_height})"
     )
-    filters = [
-        f"trim=start={source_in:.8f}:duration={source_duration:.8f}",
-        f"setpts=(PTS-STARTPTS)/{speed:.8f}",
-        f"trim=duration={duration:.8f}",
-        f"fps={fps:.8f}",
-    ]
+    freeze_frame_time = clip.get("freezeFrameSourceTime")
+    if freeze_frame_time is not None and not is_image:
+        frozen_source_time = _number(freeze_frame_time, 0)
+        frame_duration = 1 / max(fps, 1)
+        filters = [
+            f"trim=start={frozen_source_time:.8f}:"
+            f"end={frozen_source_time + frame_duration:.8f}",
+            "setpts=PTS-STARTPTS",
+            f"tpad=stop_mode=clone:stop_duration={duration:.8f}",
+            f"trim=duration={duration:.8f}",
+            f"fps={fps:.8f}",
+        ]
+    else:
+        filters = [
+            f"trim=start={source_in:.8f}:duration={source_duration:.8f}",
+            f"setpts=(PTS-STARTPTS)/{speed:.8f}",
+            f"trim=duration={duration:.8f}",
+            f"fps={fps:.8f}",
+        ]
     filters.extend(_effect_filters(clip))
     filters.append(
         "scale="
@@ -856,6 +871,7 @@ def build_render_plan(
                 should_include_audio = (
                     not track_muted
                     and not clip.get("muted", False)
+                    and clip.get("freezeFrameSourceTime") is None
                     and (
                         (
                             track.get("kind") == "audio"

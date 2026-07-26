@@ -33,6 +33,7 @@ export function canExtractSourceAudio(
 ): element is VideoElement {
 	return (
 		element.type === "video" &&
+		element.freezeFrameSourceTime === undefined &&
 		isSourceAudioEnabled({ element }) &&
 		!!mediaAsset &&
 		mediaAsset.hasAudio !== false
@@ -42,7 +43,11 @@ export function canExtractSourceAudio(
 export function canRecoverSourceAudio(
 	element: TimelineElement,
 ): element is VideoElement {
-	return element.type === "video" && isSourceAudioSeparated({ element });
+	return (
+		element.type === "video" &&
+		element.freezeFrameSourceTime === undefined &&
+		isSourceAudioSeparated({ element })
+	);
 }
 
 export function canToggleSourceAudio(
@@ -68,6 +73,7 @@ export function doesElementHaveEnabledAudio({
 	return (
 		!!mediaAsset &&
 		mediaAsset.hasAudio !== false &&
+		element.freezeFrameSourceTime === undefined &&
 		isSourceAudioEnabled({ element })
 	);
 }

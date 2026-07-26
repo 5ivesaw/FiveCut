@@ -89,8 +89,8 @@ export function useTimelineDragDrop({
 				const mediaAssets = editor.media.getAssets();
 				const media = mediaAssets.find((m) => m.id === mediaId);
 				return media?.duration != null
-				? Math.round(media.duration * TICKS_PER_SECOND)
-				: DEFAULT_NEW_ELEMENT_DURATION;
+					? Math.round(media.duration * TICKS_PER_SECOND)
+					: DEFAULT_NEW_ELEMENT_DURATION;
 			}
 			return DEFAULT_NEW_ELEMENT_DURATION;
 		},
@@ -332,14 +332,22 @@ export function useTimelineDragDrop({
 
 	const executeMediaDrop = useCallback(
 		({ target, dragData }: { target: DropTarget; dragData: MediaDragData }) => {
-			if (target.targetElement) {
-				toast.info("Replace media source is coming soon!");
-				return;
-			}
-
 			const mediaAssets = editor.media.getAssets();
 			const mediaAsset = mediaAssets.find((m) => m.id === dragData.id);
 			if (!mediaAsset) return;
+
+			if (target.targetElement) {
+				const result = editor.timeline.replaceElementMedia({
+					element: target.targetElement,
+					media: mediaAsset,
+				});
+				if (!result.ok) {
+					toast.error("This media cannot replace the selected clip");
+					return;
+				}
+				toast.success(`Replaced clip with ${mediaAsset.name}`);
+				return;
+			}
 
 			const trackType: TrackType =
 				dragData.mediaType === "audio" ? "audio" : "video";
@@ -468,10 +476,10 @@ export function useTimelineDragDrop({
 						});
 						if (!createdAsset) continue;
 
-					const duration =
-						createdAsset.duration != null
-							? Math.round(createdAsset.duration * TICKS_PER_SECOND)
-							: DEFAULT_NEW_ELEMENT_DURATION;
+						const duration =
+							createdAsset.duration != null
+								? Math.round(createdAsset.duration * TICKS_PER_SECOND)
+								: DEFAULT_NEW_ELEMENT_DURATION;
 						const sceneTracks = editor.scenes.getActiveScene().tracks;
 						const currentTime = editor.playback.getCurrentTime();
 						const reuseMainTrackId =

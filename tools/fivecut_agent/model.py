@@ -461,35 +461,81 @@ def validate_project(
                             clip_path,
                             f"An {kind} asset cannot be placed on a visual track.",
                         )
-                source_in = clip.get("sourceIn", 0)
-                source_duration = clip.get(
-                    "sourceDuration",
-                    (duration or 0) * float(clip.get("speed", 1) or 1),
-                )
-                source_in_value = _require_number(
-                    source_in, f"{clip_path}.sourceIn", issues, minimum=0
-                )
-                source_duration_value = _require_number(
-                    source_duration,
-                    f"{clip_path}.sourceDuration",
-                    issues,
-                    exclusive_minimum=0,
-                )
-                if (
-                    asset
-                    and _is_number(asset.get("duration"))
-                    and source_in_value is not None
-                    and source_duration_value is not None
-                    and source_in_value + source_duration_value
-                    > float(asset["duration"]) + 0.05
-                ):
-                    _issue(
+                freeze_frame_time = clip.get("freezeFrameSourceTime")
+                if freeze_frame_time is not None:
+                    freeze_frame_value = _require_number(
+                        freeze_frame_time,
+                        f"{clip_path}.freezeFrameSourceTime",
                         issues,
-                        "error",
-                        "SOURCE_RANGE_EXCEEDS_ASSET",
-                        clip_path,
-                        "The requested source range extends beyond the asset duration.",
+                        minimum=0,
                     )
+                    if asset and asset.get("kind") != "video":
+                        _issue(
+                            issues,
+                            "error",
+                            "FREEZE_FRAME_REQUIRES_VIDEO",
+                            f"{clip_path}.freezeFrameSourceTime",
+                            "Only video assets can be used for freeze frames.",
+                        )
+                    if track_kind not in {"video", "graphic"}:
+                        _issue(
+                            issues,
+                            "error",
+                            "FREEZE_FRAME_REQUIRES_VISUAL_TRACK",
+                            clip_path,
+                            "Freeze frames must be placed on a visual track.",
+                        )
+                    if (
+                        asset
+                        and _is_number(asset.get("duration"))
+                        and freeze_frame_value is not None
+                        and freeze_frame_value >= float(asset["duration"])
+                    ):
+                        _issue(
+                            issues,
+                            "error",
+                            "FREEZE_FRAME_OUT_OF_RANGE",
+                            f"{clip_path}.freezeFrameSourceTime",
+                            "The freeze-frame timestamp must be before the asset end.",
+                        )
+                    if clip.get("includeSourceAudio") is True:
+                        _issue(
+                            issues,
+                            "warning",
+                            "FREEZE_FRAME_AUDIO_IGNORED",
+                            f"{clip_path}.includeSourceAudio",
+                            "Freeze frames are silent; source audio will be ignored.",
+                        )
+                else:
+                    source_in = clip.get("sourceIn", 0)
+                    source_duration = clip.get(
+                        "sourceDuration",
+                        (duration or 0) * float(clip.get("speed", 1) or 1),
+                    )
+                    source_in_value = _require_number(
+                        source_in, f"{clip_path}.sourceIn", issues, minimum=0
+                    )
+                    source_duration_value = _require_number(
+                        source_duration,
+                        f"{clip_path}.sourceDuration",
+                        issues,
+                        exclusive_minimum=0,
+                    )
+                    if (
+                        asset
+                        and _is_number(asset.get("duration"))
+                        and source_in_value is not None
+                        and source_duration_value is not None
+                        and source_in_value + source_duration_value
+                        > float(asset["duration"]) + 0.05
+                    ):
+                        _issue(
+                            issues,
+                            "error",
+                            "SOURCE_RANGE_EXCEEDS_ASSET",
+                            clip_path,
+                            "The requested source range extends beyond the asset duration.",
+                        )
             elif clip_type in {"text", "caption"} and not isinstance(
                 clip.get("text"), str
             ):

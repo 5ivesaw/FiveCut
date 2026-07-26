@@ -1,4 +1,5 @@
 export const SITE_URL = "https://github.com/5ivesaw/FiveCut";
+export const DOWNLOAD_SITE_URL = "https://5ivesaw.github.io/FiveCut/";
 
 export const SITE_INFO = {
 	title: "FiveCut",

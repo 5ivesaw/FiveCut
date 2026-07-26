@@ -1,6 +1,7 @@
 # rust/
 
-Shared Rust crates that power OpenCut across platforms (web via WASM, desktop natively).
+Shared Rust crates that power FiveCut across platforms (web via WASM, desktop
+natively). FiveCut is based on OpenCut and retains its MIT attribution.
 
 ## Adding a new crate
 

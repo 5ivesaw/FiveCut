@@ -284,6 +284,10 @@
         "duration": { "$ref": "#/$defs/positiveTime" },
         "sourceIn": { "$ref": "#/$defs/time" },
         "sourceDuration": { "$ref": "#/$defs/positiveTime" },
+        "freezeFrameSourceTime": {
+          "description": "Hold a video clip on this absolute source timestamp, in seconds. Frozen clips are silent.",
+          "$ref": "#/$defs/time"
+        },
         "speed": { "type": "number", "minimum": 0.05, "maximum": 20, "default": 1 },
         "opacity": { "type": "number", "minimum": 0, "maximum": 1, "default": 1 },
         "volumeDb": { "type": "number", "minimum": -96, "maximum": 24, "default": 0 },

@@ -6,11 +6,18 @@ import type {
 	TimelineTrack,
 	TimelineElement,
 	RetimeConfig,
+	ElementRef,
 } from "@/lib/timeline";
 import { calculateTotalDuration } from "@/lib/timeline";
+import { findTrackInSceneTracks } from "@/lib/timeline/track-element-update";
 import {
-	findTrackInSceneTracks,
-} from "@/lib/timeline/track-element-update";
+	createFreezeFrameEdit,
+	type FreezeFrameEditResult,
+} from "@/lib/timeline/freeze-frame";
+import {
+	createReplaceMediaEdit,
+	type ReplaceMediaEditResult,
+} from "@/lib/timeline/replace-media";
 import {
 	canElementBeHidden,
 	canElementHaveAudio,
@@ -57,6 +64,9 @@ import {
 	ToggleSourceAudioSeparationCommand,
 } from "@/lib/commands/timeline";
 import type { InsertElementParams } from "@/lib/commands/timeline/element/insert-element";
+import { generateUUID } from "@/utils/id";
+import type { MediaAsset } from "@/lib/media/types";
+import { TICKS_PER_SECOND } from "@/lib/wasm";
 
 export class TimelineManager {
 	private listeners = new Set<() => void>();
@@ -200,6 +210,79 @@ export class TimelineManager {
 		return command.getRightSideElements();
 	}
 
+	insertFreezeFrame({
+		element,
+		atTime,
+		duration,
+	}: {
+		element: ElementRef;
+		atTime: number;
+		duration?: number;
+	}): FreezeFrameEditResult {
+		const activeScene = this.editor.scenes.getActiveSceneOrNull();
+		if (!activeScene) {
+			return { ok: false, reason: "not-found" };
+		}
+
+		const before = activeScene.tracks;
+		const result = createFreezeFrameEdit({
+			tracks: before,
+			target: element,
+			atTime,
+			duration,
+			rippleAllTracks: this.editor.command.isRippleEnabled,
+			createId: generateUUID,
+		});
+		if (!result.ok) {
+			return result;
+		}
+
+		this.editor.command.execute({
+			command: new TracksSnapshotCommand(before, result.tracks, [
+				result.freezeElement,
+			]),
+		});
+		return result;
+	}
+
+	replaceElementMedia({
+		element,
+		media,
+	}: {
+		element: ElementRef;
+		media: Pick<MediaAsset, "id" | "name" | "type" | "duration">;
+	}): ReplaceMediaEditResult {
+		const activeScene = this.editor.scenes.getActiveSceneOrNull();
+		if (!activeScene) {
+			return { ok: false, reason: "not-found" };
+		}
+
+		const before = activeScene.tracks;
+		const result = createReplaceMediaEdit({
+			tracks: before,
+			target: element,
+			media: {
+				id: media.id,
+				name: media.name,
+				type: media.type,
+				duration:
+					media.duration === undefined
+						? undefined
+						: Math.round(media.duration * TICKS_PER_SECOND),
+			},
+		});
+		if (!result.ok) {
+			return result;
+		}
+
+		this.editor.command.execute({
+			command: new TracksSnapshotCommand(before, result.tracks, [
+				result.element,
+			]),
+		});
+		return result;
+	}
+
 	getTotalDuration(): number {
 		const activeScene = this.editor.scenes.getActiveSceneOrNull();
 		if (!activeScene) {
@@ -328,8 +411,7 @@ export class TimelineManager {
 			return [];
 		}
 		this.editor.command.execute({
-			command:
-				commands.length === 1 ? commands[0] : new BatchCommand(commands),
+			command: commands.length === 1 ? commands[0] : new BatchCommand(commands),
 		});
 		return commands.flatMap((command) => {
 			const effectId = command.getEffectId();
@@ -604,14 +686,7 @@ export class TimelineManager {
 		}
 
 		const commands = keyframes.map(
-			({
-				trackId,
-				elementId,
-				propertyPath,
-				componentKey,
-				keyframeId,
-				patch,
-			}) =>
+			({ trackId, elementId, propertyPath, componentKey, keyframeId, patch }) =>
 				new UpdateScalarKeyframeCurveCommand({
 					trackId,
 					elementId,
@@ -735,7 +810,9 @@ export class TimelineManager {
 	private applyPreviewOverlay(tracks: SceneTracks): SceneTracks {
 		if (this.previewOverlay.size === 0) return tracks;
 
-		const applyTrackOverlay = <TTrack extends TimelineTrack>(track: TTrack): TTrack => {
+		const applyTrackOverlay = <TTrack extends TimelineTrack>(
+			track: TTrack,
+		): TTrack => {
 			const hasOverlay = track.elements.some((element) =>
 				this.previewOverlay.has(element.id),
 			);
@@ -827,7 +904,11 @@ export class TimelineManager {
 	}
 
 	getPreviewTracks(): SceneTracks | null {
-		return this.previewTracks ?? this.editor.scenes.getActiveSceneOrNull()?.tracks ?? null;
+		return (
+			this.previewTracks ??
+			this.editor.scenes.getActiveSceneOrNull()?.tracks ??
+			null
+		);
 	}
 
 	subscribe(listener: () => void): () => void {

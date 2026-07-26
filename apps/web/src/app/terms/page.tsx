@@ -10,13 +10,13 @@ import { Separator } from "@/components/ui/separator";
 import { SOCIAL_LINKS } from "@/lib/site/social";
 
 export const metadata: Metadata = {
-	title: "Terms of Service - OpenCut",
+	title: "Terms of Service - FiveCut",
 	description:
-		"OpenCut's Terms of Service. Fair, transparent terms for our free and open-source video editor.",
+		"FiveCut's Terms of Service. Fair, transparent terms for our free and open-source video editor.",
 	openGraph: {
-		title: "Terms of Service - OpenCut",
+		title: "Terms of Service - FiveCut",
 		description:
-			"OpenCut's Terms of Service. Fair, transparent terms for our free and open-source video editor.",
+			"FiveCut's Terms of Service. Fair, transparent terms for our free and open-source video editor.",
 		type: "website",
 	},
 };
@@ -64,13 +64,16 @@ export default function TermsPage() {
 							</li>
 						</ol>
 						<p className="mt-4">
-							Questions? Email us at{" "}
+							Questions? Open an issue in the{" "}
 							<a
-								href="mailto:oss@opencut.app"
+								href={SOCIAL_LINKS.issues}
+								target="_blank"
+								rel="noopener noreferrer"
 								className="text-primary hover:underline"
 							>
-								oss@opencut.app
+								FiveCut repository
 							</a>
+							.
 						</p>
 					</AccordionContent>
 				</AccordionItem>
@@ -83,7 +86,7 @@ export default function TermsPage() {
 					processing happens locally on your device. We never see, store, or
 					have access to your files. We make no claims to ownership, licensing,
 					or rights over your videos, projects, or any content you create using
-					OpenCut.
+					FiveCut.
 				</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
@@ -91,25 +94,25 @@ export default function TermsPage() {
 					</li>
 					<li>You retain all intellectual property rights to your content</li>
 					<li>You can export and use your content however you choose</li>
-					<li>No watermarks, no licensing restrictions from OpenCut</li>
+					<li>No watermarks, no licensing restrictions from FiveCut</li>
 				</ul>
 			</section>
 
 			<section className="flex flex-col gap-3">
-				<h2 className="text-2xl font-semibold">How You Can Use OpenCut</h2>
-				<p>OpenCut is free for personal and commercial use. You can:</p>
+				<h2 className="text-2xl font-semibold">How You Can Use FiveCut</h2>
+				<p>FiveCut is free for personal and commercial use. You can:</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						Create videos for personal, educational, or commercial purposes
 					</li>
-					<li>Use OpenCut for client work and paid projects</li>
-					<li>Share and distribute videos created with OpenCut</li>
+					<li>Use FiveCut for client work and paid projects</li>
+					<li>Share and distribute videos created with FiveCut</li>
 					<li>
-						Modify and distribute the OpenCut software (under MIT license)
+						Modify and distribute the FiveCut software (under MIT license)
 					</li>
 				</ul>
 				<p>
-					You're responsible for how you use OpenCut and the content you create.
+					You're responsible for how you use FiveCut and the content you create.
 					Don't use it for anything illegal in your jurisdiction.
 				</p>
 			</section>
@@ -119,14 +122,14 @@ export default function TermsPage() {
 				<p>
 					AI features like auto captions run entirely in your browser using
 					on-device models. No content is uploaded to any server. These features
-					are optional - you can use OpenCut without them.
+					are optional - you can use FiveCut without them.
 				</p>
 			</section>
 
 			<section className="flex flex-col gap-3">
 				<h2 className="text-2xl font-semibold">Service</h2>
 				<p>
-					OpenCut does not currently require an account. The service is provided
+					FiveCut does not currently require an account. The service is provided
 					"as is" without warranties. While we strive for reliability, we can't
 					guarantee uninterrupted service.
 				</p>
@@ -134,10 +137,10 @@ export default function TermsPage() {
 
 			<section className="flex flex-col gap-3">
 				<h2 className="text-2xl font-semibold">Open Source Benefits</h2>
-				<p>Because OpenCut is open source, you have additional rights:</p>
+				<p>Because FiveCut is open source, you have additional rights:</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>Review our code to see exactly how we handle your data</li>
-					<li>Self-host OpenCut on your own servers</li>
+					<li>Self-host FiveCut on your own servers</li>
 					<li>Modify the software to suit your needs</li>
 					<li>Contribute improvements back to the community</li>
 				</ul>
@@ -158,7 +161,7 @@ export default function TermsPage() {
 			<section className="flex flex-col gap-3">
 				<h2 className="text-2xl font-semibold">Limitations and Liability</h2>
 				<p>
-					OpenCut is provided free of charge. To the extent permitted by law:
+					FiveCut is provided free of charge. To the extent permitted by law:
 				</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>We're not liable for any loss of data or content</li>
@@ -178,7 +181,7 @@ export default function TermsPage() {
 
 			<section className="flex flex-col gap-3">
 				<h2 className="text-2xl font-semibold">Service Changes</h2>
-				<p>We may update OpenCut and these terms:</p>
+				<p>We may update FiveCut and these terms:</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>We'll notify you of significant changes to these terms</li>
 					<li>Continued use means you accept any updates</li>
@@ -189,7 +192,7 @@ export default function TermsPage() {
 
 			<section className="flex flex-col gap-3">
 				<h2 className="text-2xl font-semibold">Stopping Use</h2>
-				<p>You can stop using OpenCut at any time:</p>
+				<p>You can stop using FiveCut at any time:</p>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>Clear your browser data to remove local projects</li>
 				</ul>
@@ -199,30 +202,14 @@ export default function TermsPage() {
 				<h2 className="text-2xl font-semibold">Contact Us</h2>
 				<p>Questions about these terms or need to report an issue?</p>
 				<p>
-					Contact us through our{" "}
+					Contact us through the{" "}
 					<a
-						href={`${SOCIAL_LINKS.github}/issues`}
+						href={SOCIAL_LINKS.issues}
 						target="_blank"
 						rel="noopener"
 						className="text-primary hover:underline"
 					>
-						GitHub repository
-					</a>
-					, email us at{" "}
-					<a
-						href="mailto:oss@opencut.app"
-						className="text-primary hover:underline"
-					>
-						oss@opencut.app
-					</a>
-					, or reach out on{" "}
-					<a
-						href={SOCIAL_LINKS.x}
-						target="_blank"
-						rel="noopener"
-						className="text-primary hover:underline"
-					>
-						X (Twitter)
+						FiveCut issue tracker
 					</a>
 					.
 				</p>

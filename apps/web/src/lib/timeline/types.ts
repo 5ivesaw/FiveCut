@@ -118,6 +118,11 @@ interface BaseTimelineElement {
 export interface VideoElement extends BaseTimelineElement {
 	type: "video";
 	mediaId: string;
+	/**
+	 * Holds this clip on one absolute source-media timestamp.
+	 * The value uses the editor timebase, just like trimStart.
+	 */
+	freezeFrameSourceTime?: number;
 	volume?: number;
 	muted?: boolean;
 	isSourceAudioEnabled?: boolean;

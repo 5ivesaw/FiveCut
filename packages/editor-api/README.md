@@ -85,6 +85,24 @@ pixelate, and film-grain effects in addition to transforms, keyframes,
 transitions, media speed, volume, captions, text, and shapes. Run a render dry
 run to obtain the authoritative compatibility report for a specific project.
 
+To create a silent held frame from a video, set
+`freezeFrameSourceTime` on a media clip to the absolute source timestamp in
+seconds. The clip's `duration` controls how long the frame is held. Keep the
+timestamp strictly before the source duration; `sourceIn`, `sourceDuration`,
+`speed`, and source audio do not affect a frozen clip.
+
+```json
+{
+  "id": "clip:reaction-freeze",
+  "type": "media",
+  "assetId": "asset:camera-a",
+  "start": 12.4,
+  "duration": 2,
+  "freezeFrameSourceTime": 8.75,
+  "includeSourceAudio": false
+}
+```
+
 ### Paths and source safety
 
 Asset and export paths resolve relative to the project document. By default:
@@ -225,6 +243,7 @@ currently advertises:
 - `captions-v1`
 - `keyframes-v1`
 - `color-grade-v1`
+- `freeze-frame-v1`
 
 Importers must reject unsupported required capabilities. Never approximate an
 unsupported command or remove it merely to make validation pass.

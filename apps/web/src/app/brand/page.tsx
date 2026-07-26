@@ -48,22 +48,15 @@ const ASSET_SECTIONS: AssetSection[] = [
 	{
 		title: "Symbol",
 		description:
-			"Use the symbol on its own when the OpenCut name is already present nearby or space is limited.",
-		cols: "2",
+			"Use the chainsaw symbol when the FiveCut name is already present nearby or space is limited.",
+		cols: "1",
 		assets: [
 			{
-				src: "/logos/opencut/symbol.svg",
-				theme: "dark",
-				label: "Symbol",
-				width: 400,
-				height: 400,
-			},
-			{
-				src: "/logos/opencut/symbol-light.svg",
-				theme: "light",
-				label: "Symbol",
-				width: 400,
-				height: 400,
+				src: "/logos/fivecut/icon.svg",
+				theme: "icon",
+				label: "FiveCut chainsaw symbol",
+				width: 128,
+				height: 128,
 			},
 		],
 	},
@@ -71,35 +64,14 @@ const ASSET_SECTIONS: AssetSection[] = [
 		title: "Lockup",
 		description:
 			"The full lockup combines the symbol and wordmark. Prefer this in most contexts where you have enough horizontal space.",
-		cols: "2",
+		cols: "1",
 		assets: [
 			{
-				src: "/logos/opencut/logo.svg",
-				theme: "dark",
-				label: "Logo",
-				width: 1809,
-				height: 400,
-			},
-			{
-				src: "/logos/opencut/logo-light.svg",
-				theme: "light",
-				label: "Logo",
-				width: 1809,
-				height: 400,
-			},
-			{
-				src: "/logos/opencut/text.svg",
-				theme: "dark",
-				label: "Text",
-				width: 1760,
-				height: 400,
-			},
-			{
-				src: "/logos/opencut/text-light.svg",
-				theme: "light",
-				label: "Text",
-				width: 1760,
-				height: 400,
+				src: "/logos/fivecut/logo.svg",
+				theme: "icon",
+				label: "FiveCut logo",
+				width: 520,
+				height: 128,
 			},
 		],
 	},
@@ -112,7 +84,7 @@ export default function BrandPage() {
 			title="Brand"
 			description={
 				<>
-					Download OpenCut brand assets for use in your projects.{" "}
+					Download the FiveCut chainsaw mark and wordmark.{" "}
 					<Link
 						href="#guidelines"
 						className="underline underline-offset-4"
@@ -173,17 +145,19 @@ export default function BrandPage() {
 				<div className="flex flex-col gap-3">
 					<h2 className="font-semibold text-lg">Usage</h2>
 					<p className="text-muted-foreground text-base leading-relaxed">
-						OpenCut is open source — the code is free to use under its license.
+						FiveCut is open source — the code is free to use under its license.
 						That license does not cover the name or logo. You can say you use
-						OpenCut, that your project integrates with OpenCut, or that it was
-						built on top of OpenCut. You cannot name your product OpenCut, imply
+						FiveCut, that your project integrates with FiveCut, or that it was
+						built on top of FiveCut. You cannot name your product FiveCut, imply
 						we made or endorse your product, or use the marks commercially
-						without asking first. For anything unclear, reach out at{" "}
+						without asking first. For anything unclear, open an issue in the{" "}
 						<Link
-							href="mailto:brand@opencut.app"
+							href="https://github.com/5ivesaw/FiveCut/issues"
+							target="_blank"
+							rel="noopener noreferrer"
 							className="underline underline-offset-4"
 						>
-							brand@opencut.app
+							FiveCut repository
 						</Link>
 						.
 					</p>
@@ -193,8 +167,8 @@ export default function BrandPage() {
 					<h2 className="font-semibold text-lg">What's not allowed</h2>
 					<ul className="text-muted-foreground text-base flex flex-col gap-2 leading-relaxed">
 						{[
-							"Using OpenCut in the name of your product, service, or domain.",
-							"Implying that OpenCut made, sponsors, or endorses your work.",
+							"Using FiveCut in the name of your product, service, or domain.",
+							"Implying that FiveCut made, sponsors, or endorses your work.",
 							"Using the logo or name on merchandise or commercial marketing.",
 							"Modifying the marks.",
 						].map((item) => (
