@@ -15,6 +15,16 @@ permissions:
   contents: read
 
 jobs:
+  site:
+    name: Download site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate site
+        run: |
+          python3 tools/validate_site.py
+          node --check site/app.js
+
   contracts:
     name: Agent contracts
     runs-on: ubuntu-latest

@@ -1,58 +1,54 @@
 <p align="center">
-  <img src="apps/web/public/logos/fivecut/icon.svg" alt="FiveCut chainsaw mark" width="104">
+  <a href="https://5ivesaw.github.io/FiveCut/">
+    <img src="apps/web/public/logos/fivecut/icon.svg" alt="FiveCut chainsaw mark" width="104">
+  </a>
 </p>
 
 <h1 align="center">FiveCut</h1>
 
 <p align="center">
-  A local-first, creator-focused desktop video editor with a documented AI editing API.
+  <strong>Cut deeper. Finish faster.</strong><br>
+  A local-first desktop video editor with a deterministic project API for external AI agents.
 </p>
 
-> FiveCut is under active development. Core editing comes from the mature
-> OpenCut v0.3 editor, while FiveCut adds a local desktop release, creator
-> assets, effects, and a deterministic external-AI project API.
+<p align="center">
+  <a href="https://5ivesaw.github.io/FiveCut/"><img alt="Website" src="https://img.shields.io/badge/website-FiveCut-ff7417?style=flat-square"></a>
+  <a href="https://github.com/5ivesaw/FiveCut/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/5ivesaw/FiveCut?display_name=tag&style=flat-square&color=ff7417"></a>
+  <a href="https://github.com/5ivesaw/FiveCut/actions/workflows/ci.yml"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/5ivesaw/FiveCut/ci.yml?branch=main&style=flat-square&label=CI"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-d8d4ce?style=flat-square"></a>
+</p>
 
-## What already works
+<p align="center">
+  <a href="https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz"><strong>Download FiveCut for Linux</strong></a>
+  ·
+  <a href="https://5ivesaw.github.io/FiveCut/">Visit the website</a>
+  ·
+  <a href="https://github.com/5ivesaw/FiveCut/issues">Report an issue</a>
+</p>
 
-- Multi-track video, image, text, graphic, effect, and audio timelines
-- Frame-accurate trimming, splitting, snapping, ripple editing, and undo/redo
-- GPU preview/export, masks, keyframes, captions, speed, volume, and blend modes
-- FiveCut transition presets and non-destructive color/effect adjustments
-- Local project/media storage with no account or hosted database required
-- Offline backgrounds and sound effects
-- Optional Openverse image, music, and SFX search; selected media is cached locally
-- Versioned JSON project and command-package schemas for AI agents
+<p align="center">
+  <a href="https://5ivesaw.github.io/FiveCut/">
+    <img src="site/assets/fivecut-social.png" alt="FiveCut desktop video editor and timeline" width="100%">
+  </a>
+</p>
 
-## Privacy and offline behavior
+> [!IMPORTANT]
+> FiveCut is usable today, but it is still an early release—not an Adobe Premiere
+> replacement yet. Linux x64 is the currently published desktop build. Windows,
+> macOS, and deeper professional workflows are being added through tested releases.
 
-Editing, project storage, preview, and export are local. The Creator Library is
-the only editor feature that intentionally needs the internet, and the editor
-falls back to its built-in assets when it is unavailable. Set
-`FIVECUT_OFFLINE=1` to prevent remote catalog searches.
+## Why FiveCut
 
-## Development
+- **Timeline first.** Multi-track video, image, text, graphic, effect, and audio editing
+- **Precise.** Frame-accurate trim, split, snap, ripple, keyframes, masks, captions, speed, volume, and blend modes
+- **Local by default.** Projects, media, previews, and exports stay on your machine
+- **Offline capable.** Editing and built-in creator assets work without the internet
+- **Agent ready.** Versioned JSON schemas, hash guards, deterministic commands, validation, logs, rollback, and FFmpeg rendering
+- **Open source.** Inspect it, change it, and help shape the editor under the MIT license
 
-Requirements: Bun 1.2.18, Rust stable, `wasm32-unknown-unknown`, wasm-pack, and
-FFmpeg.
+## Download and launch
 
-```bash
-bun install
-bun run build:wasm
-bun run build:web
-```
-
-Run the web shell locally:
-
-```bash
-bun run dev:web
-```
-
-The local editor opens at `http://localhost:3000/projects`.
-
-## Linux desktop release
-
-Download `FiveCut-linux-x64.tar.gz` from
-[GitHub Releases](https://github.com/5ivesaw/FiveCut/releases), then:
+Download [`FiveCut-linux-x64.tar.gz`](https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz), then run:
 
 ```bash
 tar -xzf FiveCut-linux-x64.tar.gz
@@ -60,32 +56,118 @@ cd FiveCut
 ./fivecut
 ```
 
-The archive contains its own Electron runtime and local FiveCut server. Run
+The archive includes its own Electron runtime and local FiveCut server. Run
 `./install.sh` only if you also want a `fivecut` terminal command and an
 application-menu entry.
 
-## AI editing API
+Verify the download with the
+[published SHA-256 file](https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz.sha256).
 
-The stable contract lives in [`packages/editor-api`](packages/editor-api).
-Agents should read [`SKILL.md`](SKILL.md) and use `fivecut-agent` to scan media,
-validate projects, apply hash-guarded command packages, and render with FFmpeg.
-All AI operations are designed to be deterministic, logged, and recoverable.
+## External AI editing
 
-External AI sites can return a complete `fivecut-project` JSON file. Use
-**Import AI edit** on FiveCut's Projects screen, select that file and its
-referenced media, and FiveCut validates paths, hashes, capabilities, timing, and
-media before storing the editable project. No built-in LLM or API key is
-required.
+FiveCut does **not** hide an LLM chat service inside the editor. Instead, it
+supports two portable workflows:
 
-## Automated builds
+1. Point a coding agent at a project folder containing your media and
+   [`SKILL.md`](SKILL.md). The agent can scan, analyze, validate, edit, render,
+   quality-check, and restore through `fivecut-agent`.
+2. Ask a file-capable AI website to return a complete `fivecut-project` JSON
+   package. Choose **Import AI edit** in FiveCut, select the JSON and referenced
+   media, and receive a validated, editable timeline.
 
-- `FiveCut CI` checks the Rust core, web editor, and agent contracts.
-- `Build FiveCut release` creates and smoke-tests a portable Linux desktop
-  artifact on a virtual display.
-- Pushing a `v*` tag publishes the artifact and checksum as a GitHub Release.
+The contract lives in [`packages/editor-api`](packages/editor-api). It covers
+tracks, clips, trims, captions, effects, keyframes, audio, assets, export
+settings, compatibility checks, missing-file handling, and undo-safe command
+packages.
+
+```bash
+# Inspect media and write machine-readable metadata
+bin/fivecut-agent scan . --output .fivecut/media-index.json
+
+# Validate an AI-created project before importing it
+bin/fivecut-agent validate ./edit.fivecut.json
+
+# Render and run quality checks deterministically
+bin/fivecut-agent render ./edit.fivecut.json --output ./final.mp4
+bin/fivecut-agent qc ./edit.fivecut.json
+```
+
+See the [agent guide](docs/AI_AGENT_GUIDE.md) and
+[command reference](packages/editor-api/README.md) for the complete workflow.
+
+## Privacy and offline behavior
+
+FiveCut requires no account for local editing. The optional Creator Library can
+search Openverse for reusable images, music, and sound effects; chosen media is
+cached locally. When the network is unavailable, the library falls back to the
+built-in backgrounds and sounds.
+
+Set `FIVECUT_OFFLINE=1` to prevent remote catalog searches entirely.
+
+## Build from source
+
+Requirements:
+
+- Bun 1.2.18
+- Rust stable with `wasm32-unknown-unknown`
+- wasm-pack
+- FFmpeg
+
+```bash
+bun install --frozen-lockfile
+bun run build:wasm
+bun run build:web
+```
+
+For development:
+
+```bash
+bun run dev:web
+```
+
+The local editor opens at `http://localhost:3000/projects`.
+
+## Quality gates
+
+Every pull request checks:
+
+- Rust core compilation and tests
+- Browser WebAssembly build
+- TypeScript type checking and web production build
+- Web editor and project-import tests
+- Agent contracts, renderer, recovery, and QC tests
+- Static download-site structure and local links
+
+Tagged releases build the offline desktop bundle, launch it under a virtual
+display, verify the FiveCut Projects screen, create a checksum, and publish the
+artifact through GitHub Actions.
+
+## Repository map
+
+| Path | Purpose |
+| --- | --- |
+| [`apps/web`](apps/web) | Next.js editor interface |
+| [`apps/desktop`](apps/desktop) | Secure local desktop shell |
+| [`rust`](rust) | Shared editing and media core |
+| [`packages/editor-api`](packages/editor-api) | Stable project and command schemas |
+| [`tools/fivecut_agent`](tools/fivecut_agent) | Local agent CLI, renderer, analyzer, QC, and recovery |
+| [`site`](site) | FiveCut download website |
+| [`.github/workflows`](.github/workflows) | CI, releases, and GitHub Pages deployment |
+
+## Roadmap
+
+- Windows and macOS signed desktop packages
+- Proxies, scopes, multicam, deeper color, and advanced audio repair
+- Automatic transcription, silence cleanup, and highlight/take analysis
+- More motion-graphics templates and downloadable creator assets
+- Large-project performance, crash recovery, and broader end-to-end testing
+
+Progress is published as working releases rather than hidden behind a hosted
+service. Follow the [releases](https://github.com/5ivesaw/FiveCut/releases) and
+[issues](https://github.com/5ivesaw/FiveCut/issues).
 
 ## Attribution
 
 FiveCut is an independent fork based on
-[OpenCut](https://github.com/OpenCut-app/OpenCut) and remains MIT-licensed.
-See [NOTICE.md](NOTICE.md) for asset and third-party notices.
+[OpenCut](https://github.com/OpenCut-app/OpenCut). FiveCut and OpenCut are
+MIT-licensed. See [NOTICE.md](NOTICE.md) for third-party and asset notices.

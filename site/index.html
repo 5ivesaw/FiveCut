@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0a09">
+    <meta name="color-scheme" content="dark">
+    <meta
+      name="description"
+      content="FiveCut is a local-first desktop video editor with a fast multi-track timeline, offline editing, and a deterministic project format for external AI agents."
+    >
+    <meta
+      name="keywords"
+      content="video editor, desktop video editor, offline video editor, open source video editor, AI video editing, Linux video editor"
+    >
+    <meta name="author" content="FiveCut">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FiveCut">
+    <meta property="og:title" content="FiveCut — Cut deeper. Finish faster.">
+    <meta
+      property="og:description"
+      content="A local-first desktop video editor built for fast, intentional creative work."
+    >
+    <meta property="og:url" content="https://5ivesaw.github.io/FiveCut/">
+    <meta
+      property="og:image"
+      content="https://5ivesaw.github.io/FiveCut/assets/fivecut-social.png"
+    >
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="FiveCut desktop video editor timeline">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FiveCut — Cut deeper. Finish faster.">
+    <meta
+      name="twitter:description"
+      content="A local-first desktop video editor built for fast, intentional creative work."
+    >
+    <meta
+      name="twitter:image"
+      content="https://5ivesaw.github.io/FiveCut/assets/fivecut-social.png"
+    >
+    <link rel="canonical" href="https://5ivesaw.github.io/FiveCut/">
+    <link rel="icon" href="assets/fivecut-mark.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      document.documentElement.classList.remove("no-js");
+      document.documentElement.classList.add("js");
+    </script>
+    <script src="app.js" defer></script>
+    <title>FiveCut — Desktop video editor</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div class="page-backdrop" aria-hidden="true">
+      <div class="backdrop-grid"></div>
+      <div class="backdrop-glow backdrop-glow-one"></div>
+      <div class="backdrop-glow backdrop-glow-two"></div>
+      <div class="backdrop-noise"></div>
+    </div>
+
+    <header class="site-header" data-header>
+      <div class="nav-shell">
+        <a class="brand" href="#top" aria-label="FiveCut home">
+          <img src="assets/fivecut-mark.svg" width="34" height="34" alt="">
+          <span>Five<span class="brand-accent">Cut</span></span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+          data-menu-toggle
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-navigation" id="site-navigation" aria-label="Main navigation" data-menu>
+          <a href="#features">Features</a>
+          <a href="#ai-workflow">AI workflow</a>
+          <a href="#download">Download</a>
+          <a
+            class="nav-github"
+            href="https://github.com/5ivesaw/FiveCut"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.82a9.6 9.6 0 0 1 2.5.34c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+              />
+            </svg>
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero section-shell" id="top">
+        <div class="hero-copy">
+          <a
+            class="release-pill"
+            href="https://github.com/5ivesaw/FiveCut/releases/tag/v0.1.0"
+            data-release-link
+          >
+            <span class="release-dot"></span>
+            <span data-version>FiveCut v0.1.0</span>
+            <span class="release-divider"></span>
+            Linux release is live
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m6 3 5 5-5 5" />
+            </svg>
+          </a>
+
+          <h1>
+            Cut deeper.
+            <span class="hero-gradient">Finish faster.</span>
+          </h1>
+
+          <p class="hero-lede">
+            A local-first desktop video editor for creators who want precision
+            without friction. Shape the story, polish every frame, and keep the
+            entire workflow on your machine.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz"
+              data-download-url
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
+              </svg>
+              <span data-download-label>Download for Linux</span>
+              <span class="button-meta" data-asset-size>170 MB</span>
+            </a>
+            <a
+              class="button button-secondary"
+              href="https://github.com/5ivesaw/FiveCut"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View source
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 15 15 5m0 0H7m8 0v8" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="hero-facts" aria-label="Product highlights">
+            <span>
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path d="m4 9 3 3 7-7" />
+              </svg>
+              No account
+            </span>
+            <span>
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path d="M9 2v14M2 9h14" />
+              </svg>
+              Works offline
+            </span>
+            <span>
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path d="M4 3h10v12H4zM7 6h4M7 9h4M7 12h2" />
+              </svg>
+              Open source
+            </span>
+          </div>
+        </div>
+
+        <div class="product-stage" data-product-stage>
+          <div class="stage-ambient" aria-hidden="true"></div>
+          <div class="floating-chip floating-chip-top">
+            <span class="chip-icon chip-icon-green">
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path d="m4 9 3 3 7-7" />
+              </svg>
+            </span>
+            <span>
+              <small>Project status</small>
+              Saved locally
+            </span>
+          </div>
+          <div class="floating-chip floating-chip-bottom">
+            <span class="chip-icon chip-icon-orange">
+              <svg viewBox="0 0 18 18" aria-hidden="true">
+                <path d="M3 13V5l6-3 6 3v8l-6 3-6-3Z" />
+                <path d="m6 9 2 2 4-5" />
+              </svg>
+            </span>
+            <span>
+              <small>AI package</small>
+              Validated
+            </span>
+          </div>
+
+          <div class="editor-window" aria-label="FiveCut editor interface preview">
+            <div class="window-topbar">
+              <div class="window-brand">
+                <img src="assets/fivecut-mark.svg" width="20" height="20" alt="">
+                <span>FiveCut</span>
+              </div>
+              <div class="project-name">
+                <span></span>
+                creator-intro.fcproject
+              </div>
+              <div class="window-actions">
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M3 8h10" />
+                  </svg>
+                </span>
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M4 4h8v8H4z" />
+                  </svg>
+                </span>
+                <span aria-hidden="true">
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="m4 4 8 8m0-8-8 8" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="editor-toolbar">
+              <div class="tool-group">
+                <span class="tool active">
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="m5 3 9 6-5 1 2 5-2 1-2-5-4 3 2-11Z" />
+                  </svg>
+                </span>
+                <span class="tool">
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M3 5h12M3 9h12M3 13h12" />
+                  </svg>
+                </span>
+                <span class="tool">
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M4 4h10v10H4zM2 9h14M9 2v14" />
+                  </svg>
+                </span>
+              </div>
+              <div class="history-controls">
+                <span>
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M7 5 3 9l4 4M3 9h7a4 4 0 0 1 4 4" />
+                  </svg>
+                </span>
+                <span class="muted">
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="m11 5 4 4-4 4M15 9H8a4 4 0 0 0-4 4" />
+                  </svg>
+                </span>
+              </div>
+              <div class="toolbar-right">
+                <span class="toolbar-time">00:00:12:18</span>
+                <span class="export-button">Export</span>
+              </div>
+            </div>
+
+            <div class="editor-main">
+              <aside class="media-panel">
+                <div class="panel-tabs">
+                  <span class="active">Media</span>
+                  <span>Text</span>
+                  <span>FX</span>
+                </div>
+                <div class="import-row">
+                  <span>Project files</span>
+                  <span class="mini-add">+</span>
+                </div>
+                <div class="media-grid">
+                  <div class="media-card media-card-one">
+                    <span class="media-duration">00:18</span>
+                  </div>
+                  <div class="media-card media-card-two">
+                    <span class="media-duration">00:07</span>
+                  </div>
+                  <div class="media-card media-card-three">
+                    <span class="audio-bars" aria-hidden="true">
+                      <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                    </span>
+                    <span class="media-duration">01:24</span>
+                  </div>
+                  <div class="media-card media-card-four">
+                    <span class="media-duration">00:11</span>
+                  </div>
+                </div>
+              </aside>
+
+              <div class="preview-panel">
+                <div class="preview-canvas">
+                  <div class="preview-image">
+                    <div class="preview-sun"></div>
+                    <div class="preview-mountain preview-mountain-back"></div>
+                    <div class="preview-mountain preview-mountain-front"></div>
+                    <div class="preview-subject"></div>
+                    <div class="preview-caption">
+                      Make the moment
+                      <strong>land.</strong>
+                    </div>
+                    <div class="safe-frame"></div>
+                  </div>
+                </div>
+                <div class="playback">
+                  <span>
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="M5 4v10M14 5l-6 4 6 4V5Z" />
+                    </svg>
+                  </span>
+                  <span class="play-button">
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="m6 4 8 5-8 5V4Z" />
+                    </svg>
+                  </span>
+                  <span>
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="M13 4v10M4 5l6 4-6 4V5Z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <aside class="properties-panel">
+                <div class="properties-heading">
+                  <span>Inspector</span>
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M4 5h10M6 9h6M8 13h2" />
+                  </svg>
+                </div>
+                <div class="property-section">
+                  <div class="property-title">
+                    <span>Transform</span>
+                    <span>⌃</span>
+                  </div>
+                  <div class="property-grid">
+                    <label><span>X</span><b>960</b></label>
+                    <label><span>Y</span><b>540</b></label>
+                    <label><span>W</span><b>1920</b></label>
+                    <label><span>H</span><b>1080</b></label>
+                  </div>
+                </div>
+                <div class="property-section">
+                  <div class="property-title">
+                    <span>Opacity</span>
+                    <b>100%</b>
+                  </div>
+                  <div class="property-slider"><span></span></div>
+                </div>
+                <div class="property-section color-section">
+                  <div class="property-title">
+                    <span>Color</span>
+                    <span>⌃</span>
+                  </div>
+                  <div class="color-wheels">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="color-labels">
+                    <span>Shadows</span><span>Midtones</span><span>Highlights</span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-tools">
+                <div>
+                  <span>
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="M4 4h10v10H4zM4 9h10" />
+                    </svg>
+                  </span>
+                  <span>
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="M6 3h6M8 3v3m2-3v3M5 6h8l-1 9H6L5 6Z" />
+                    </svg>
+                  </span>
+                  <span>
+                    <svg viewBox="0 0 18 18" aria-hidden="true">
+                      <path d="M4 3v12M14 3v12M7 6h4v6H7z" />
+                    </svg>
+                  </span>
+                </div>
+                <div class="zoom-control">
+                  <span>−</span><i><b></b></i><span>+</span>
+                </div>
+              </div>
+              <div class="timeline-body">
+                <div class="track-labels">
+                  <div><span>V2</span><b>Captions</b></div>
+                  <div><span>V1</span><b>Main story</b></div>
+                  <div><span>A1</span><b>Voice</b></div>
+                  <div><span>A2</span><b>Music</b></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="timeline-ruler">
+                    <span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span>
+                  </div>
+                  <div class="timeline-playhead"><span></span></div>
+                  <div class="timeline-track caption-track">
+                    <span style="--x: 8%; --w: 20%">Say something worth</span>
+                    <span style="--x: 31%; --w: 17%">watching.</span>
+                    <span style="--x: 52%; --w: 22%">Then make it land.</span>
+                  </div>
+                  <div class="timeline-track video-track">
+                    <span class="clip clip-one" style="--x: 2%; --w: 27%">
+                      <i></i><b>mountain-intro.mp4</b>
+                    </span>
+                    <span class="transition" style="--x: 27%"></span>
+                    <span class="clip clip-two" style="--x: 29%; --w: 25%">
+                      <i></i><b>creator-closeup.mp4</b>
+                    </span>
+                    <span class="clip clip-three" style="--x: 55%; --w: 39%">
+                      <i></i><b>product-reveal.mp4</b>
+                    </span>
+                  </div>
+                  <div class="timeline-track voice-track">
+                    <span class="audio-clip" style="--x: 2%; --w: 92%">
+                      <i class="waveform"></i>
+                      <b>voiceover-clean.wav</b>
+                    </span>
+                  </div>
+                  <div class="timeline-track music-track">
+                    <span class="audio-clip music" style="--x: 10%; --w: 84%">
+                      <i class="waveform waveform-two"></i>
+                      <b>horizon-score.wav</b>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="capability-strip" aria-label="Editing capabilities">
+          <div>
+            <span>Multi-track timeline</span>
+            <i></i>
+            <span>Frame-accurate trims</span>
+            <i></i>
+            <span>Keyframes</span>
+            <i></i>
+            <span>Captions</span>
+            <i></i>
+            <span>Color &amp; effects</span>
+            <i></i>
+            <span>Local export</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="manifesto section-shell">
+        <div class="section-kicker reveal">
+          <span>Built for the cut</span>
+          <i></i>
+        </div>
+        <div class="manifesto-grid">
+          <h2 class="reveal">
+            Serious editing tools.<br>
+            <span>None of the ceremony.</span>
+          </h2>
+          <p class="reveal">
+            FiveCut puts the timeline first. Bring in footage, find the rhythm,
+            refine the details, and export—without accounts, cloud lock-in, or
+            an internet connection standing between you and the work.
+          </p>
+        </div>
+      </section>
+
+      <section class="features section-shell" id="features">
+        <div class="feature-grid">
+          <article class="feature-card feature-card-timeline reveal">
+            <div class="feature-copy">
+              <span class="feature-index">01 / Precision</span>
+              <h3>A timeline that keeps up.</h3>
+              <p>
+                Trim, split, snap, ripple, layer, and keyframe with the control
+                a final cut deserves.
+              </p>
+            </div>
+            <div class="precision-visual" aria-hidden="true">
+              <div class="precision-ruler">
+                <span>08:12</span><i></i><i></i><i></i><span>08:13</span><i></i><i></i><i></i><span>08:14</span>
+              </div>
+              <div class="precision-playhead"><span></span></div>
+              <div class="precision-row">
+                <span class="precision-clip orange">B-roll / city</span>
+                <span class="precision-cut"></span>
+                <span class="precision-clip steel">Close-up / take 3</span>
+              </div>
+              <div class="precision-row">
+                <span class="precision-audio">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature-card feature-card-offline reveal">
+            <div class="feature-copy">
+              <span class="feature-index">02 / Local-first</span>
+              <h3>Your footage stays yours.</h3>
+              <p>
+                Projects, previews, edits, and exports stay on your machine.
+                FiveCut works without an account and keeps editing offline.
+              </p>
+            </div>
+            <div class="offline-orbit" aria-hidden="true">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="local-core">
+                <img src="assets/fivecut-mark.svg" width="48" height="48" alt="">
+              </div>
+              <span class="orbit-node node-one">
+                <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h5l2 2h5v8H3V5Z" /></svg>
+              </span>
+              <span class="orbit-node node-two">
+                <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 4h12v10H3zM6 14v2m6-2v2M7 7l4 2-4 2V7Z" /></svg>
+              </span>
+              <span class="orbit-node node-three">
+                <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 3h10v12H4zM7 6h4M7 9h4M7 12h2" /></svg>
+              </span>
+            </div>
+          </article>
+
+          <article class="feature-card feature-card-effects reveal">
+            <div class="feature-copy">
+              <span class="feature-index">03 / Finish</span>
+              <h3>Polish without the pile-up.</h3>
+              <p>
+                Captions, masks, blend modes, speed, transitions, color, and
+                motion controls stay non-destructive and editable.
+              </p>
+            </div>
+            <div class="effect-stack" aria-hidden="true">
+              <div class="effect-layer layer-back">
+                <span>COLOR</span>
+              </div>
+              <div class="effect-layer layer-mid">
+                <span>MOTION</span>
+              </div>
+              <div class="effect-layer layer-front">
+                <span>STORY</span>
+                <strong>Every frame,<br>intentional.</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature-card feature-card-assets reveal">
+            <div class="feature-copy">
+              <span class="feature-index">04 / Creator library</span>
+              <h3>Start with something useful.</h3>
+              <p>
+                Built-in backgrounds and sounds work offline. Optional
+                Openverse search brings reusable media into the same panel.
+              </p>
+            </div>
+            <div class="asset-stack" aria-hidden="true">
+              <div class="asset-tile asset-one"><span>Grain</span></div>
+              <div class="asset-tile asset-two"><span>Pulse</span></div>
+              <div class="asset-tile asset-three">
+                <span class="asset-wave"></span>
+                <b>Impact 04</b>
+              </div>
+              <div class="asset-tile asset-four"><span>Grid</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="ai-workflow" id="ai-workflow">
+        <div class="section-shell">
+          <div class="ai-heading reveal">
+            <div>
+              <div class="section-kicker">
+                <span>External AI, real control</span>
+                <i></i>
+              </div>
+              <h2>Describe the edit.<br><span>Own the timeline.</span></h2>
+            </div>
+            <p>
+              Use a file-capable AI website or a coding agent in your project
+              folder. It creates a documented FiveCut project package; the
+              editor validates it, imports it, and keeps every decision editable.
+            </p>
+          </div>
+
+          <div class="workflow-rail reveal">
+            <article class="workflow-step">
+              <div class="step-number">01</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 28 28" aria-hidden="true">
+                  <path d="M5 6h18v12H11l-6 5V6Z" />
+                  <path d="M9 10h10M9 14h6" />
+                </svg>
+              </div>
+              <h3>Ask naturally</h3>
+              <p>
+                “Build a sharp 45-second creator intro, remove dead air, keep
+                captions clean, and land the music on the reveal.”
+              </p>
+            </article>
+            <span class="workflow-connector" aria-hidden="true">
+              <i></i>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 4 6 6-6 6" /></svg>
+            </span>
+            <article class="workflow-step">
+              <div class="step-number">02</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 28 28" aria-hidden="true">
+                  <path d="M7 3h10l5 5v17H7V3Z" />
+                  <path d="M17 3v6h5M11 14h7M11 18h7" />
+                </svg>
+              </div>
+              <h3>Receive a project</h3>
+              <p>
+                The AI returns structured, deterministic JSON using FiveCut’s
+                versioned schema—without needing a model inside the app.
+              </p>
+            </article>
+            <span class="workflow-connector" aria-hidden="true">
+              <i></i>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 4 6 6-6 6" /></svg>
+            </span>
+            <article class="workflow-step">
+              <div class="step-number">03</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 28 28" aria-hidden="true">
+                  <path d="m6 14 5 5L22 8" />
+                  <circle cx="14" cy="14" r="11" />
+                </svg>
+              </div>
+              <h3>Validate and finish</h3>
+              <p>
+                FiveCut checks files, hashes, timing, and capabilities before
+                creating an undo-safe timeline ready to preview or refine.
+              </p>
+            </article>
+          </div>
+
+          <div class="api-panel reveal">
+            <div class="api-copy">
+              <span class="api-label">FIVECUT PROJECT API</span>
+              <h3>A stable editing language for agents.</h3>
+              <p>
+                Tracks, trims, captions, effects, keyframes, audio, assets, and
+                export settings are explicit. Validation errors are readable;
+                operations are logged and recoverable.
+              </p>
+              <div class="api-links">
+                <a href="https://github.com/5ivesaw/FiveCut/blob/main/SKILL.md">
+                  Read SKILL.md
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M4 14 14 4m0 0H6m8 0v8" />
+                  </svg>
+                </a>
+                <a href="https://github.com/5ivesaw/FiveCut/tree/main/packages/editor-api">
+                  Explore schemas
+                  <svg viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M4 14 14 4m0 0H6m8 0v8" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="code-window" aria-label="Example FiveCut project JSON">
+              <div class="code-header">
+                <span><i></i><i></i><i></i></span>
+                <b>creator-intro.fivecut.json</b>
+                <em>VALID</em>
+              </div>
+              <pre><code><span class="code-muted">{</span>
+  <span class="code-key">"format"</span>: <span class="code-string">"fivecut-project"</span>,
+  <span class="code-key">"version"</span>: <span class="code-string">"1.0"</span>,
+  <span class="code-key">"sequence"</span>: <span class="code-muted">{</span>
+    <span class="code-key">"fps"</span>: <span class="code-number">30</span>,
+    <span class="code-key">"tracks"</span>: <span class="code-muted">[</span>
+      <span class="code-muted">{</span>
+        <span class="code-key">"kind"</span>: <span class="code-string">"video"</span>,
+        <span class="code-key">"clips"</span>: <span class="code-muted">[</span><span class="code-comment">/* intentional cuts */</span><span class="code-muted">]</span>
+      <span class="code-muted">}</span>
+    <span class="code-muted">]</span>
+  <span class="code-muted">}</span>
+<span class="code-muted">}</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="download-section section-shell" id="download">
+        <div class="download-heading reveal">
+          <div>
+            <div class="section-kicker">
+              <span>Get FiveCut</span>
+              <i></i>
+            </div>
+            <h2>Your next cut starts here.</h2>
+          </div>
+          <p>
+            The portable Linux build includes the editor, local server, and
+            desktop runtime. Extract it and launch—no account required.
+          </p>
+        </div>
+
+        <div class="platform-grid">
+          <article class="platform-card platform-available reveal">
+            <div class="platform-topline">
+              <span class="platform-icon">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M11 24c-2 1-4 2-6 2 1-3 2-5 4-7M21 24c2 1 4 2 6 2-1-3-2-5-4-7" />
+                  <path d="M10 15c0-7 2-11 6-11s6 4 6 11c3 3 3 8 0 11H10c-3-3-3-8 0-11Z" />
+                  <circle cx="13" cy="13" r="1" />
+                  <circle cx="19" cy="13" r="1" />
+                  <path d="m13 17 3 2 3-2M12 23h8" />
+                </svg>
+              </span>
+              <span class="available-badge">Available now</span>
+            </div>
+            <h3>Linux</h3>
+            <p>Portable x64 bundle · Electron desktop shell</p>
+            <a
+              class="platform-download"
+              href="https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz"
+              data-download-url
+            >
+              <span>
+                <strong>Download FiveCut</strong>
+                <small><span data-version-short>v0.1.0</span> · <span data-asset-size>170 MB</span></small>
+              </span>
+              <svg viewBox="0 0 22 22" aria-hidden="true">
+                <path d="M11 3v11m0 0 4-4m-4 4-4-4M4 19h14" />
+              </svg>
+            </a>
+          </article>
+
+          <article class="platform-card reveal">
+            <div class="platform-topline">
+              <span class="platform-icon">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M16 5 5 9v7h11V5Zm2 0v11h9V8l-9-3ZM5 18v7l11 3V18H5Zm13 0v10l9-3v-7h-9Z" />
+                </svg>
+              </span>
+              <span class="roadmap-badge">Roadmap</span>
+            </div>
+            <h3>Windows</h3>
+            <p>Native installer and portable build are planned.</p>
+            <a
+              class="platform-secondary"
+              href="https://github.com/5ivesaw/FiveCut/issues"
+            >
+              Follow progress
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 14 14 4m0 0H6m8 0v8" /></svg>
+            </a>
+          </article>
+
+          <article class="platform-card reveal">
+            <div class="platform-topline">
+              <span class="platform-icon">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M21 17c0-4 3-6 6-6-2-3-5-4-7-4-3 0-4 2-7 2-2 0-4-2-7-2-4 1-6 5-6 9 0 6 5 13 9 13 2 0 3-1 6-1s4 1 6 1c4 0 8-6 9-11-5-2-9-1-9-1Z" />
+                  <path d="M19 2c0 3-2 5-5 6 0-3 2-5 5-6Z" />
+                </svg>
+              </span>
+              <span class="roadmap-badge">Roadmap</span>
+            </div>
+            <h3>macOS</h3>
+            <p>Signed Apple silicon and Intel builds are planned.</p>
+            <a
+              class="platform-secondary"
+              href="https://github.com/5ivesaw/FiveCut/issues"
+            >
+              Follow progress
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 14 14 4m0 0H6m8 0v8" /></svg>
+            </a>
+          </article>
+        </div>
+
+        <div class="install-panel reveal">
+          <div class="install-copy">
+            <span>QUICK START</span>
+            <p>Extract, enter the folder, and launch FiveCut.</p>
+          </div>
+          <div class="command-box">
+            <code>tar -xzf FiveCut-linux-x64.tar.gz &amp;&amp; cd FiveCut &amp;&amp; ./fivecut</code>
+            <button type="button" data-copy-command aria-label="Copy launch command">
+              <svg class="copy-icon" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M7 6V3h10v10h-3M3 7h10v10H3z" />
+              </svg>
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="m4 10 4 4 8-9" />
+              </svg>
+            </button>
+          </div>
+          <div class="download-links">
+            <a
+              href="https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz.sha256"
+              data-checksum-url
+            >
+              SHA-256 checksum
+            </a>
+            <i></i>
+            <a href="https://github.com/5ivesaw/FiveCut/releases">All releases</a>
+            <i></i>
+            <span>Published <time data-published>July 2026</time></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="open-source section-shell">
+        <div class="open-source-panel reveal">
+          <div class="oss-grid" aria-hidden="true"></div>
+          <div class="oss-mark">
+            <img src="assets/fivecut-mark.svg" width="76" height="76" alt="">
+          </div>
+          <span class="oss-label">OPEN SOURCE · LOCAL-FIRST · CREATOR-DRIVEN</span>
+          <h2>Built in the open.<br><span>Made to be shaped.</span></h2>
+          <p>
+            Read the code, inspect the project format, report rough edges, and
+            help turn FiveCut into the editor creators deserve.
+          </p>
+          <div class="oss-actions">
+            <a
+              class="button button-primary"
+              href="https://github.com/5ivesaw/FiveCut"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.82a9.6 9.6 0 0 1 2.5.34c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"
+                />
+              </svg>
+              Open on GitHub
+            </a>
+            <a class="button button-secondary" href="https://github.com/5ivesaw/FiveCut/issues">
+              Report an issue
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M5 15 15 5m0 0H7m8 0v8" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="FiveCut home">
+            <img src="assets/fivecut-mark.svg" width="32" height="32" alt="">
+            <span>Five<span class="brand-accent">Cut</span></span>
+          </a>
+          <p>Cut deeper. Finish faster.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <strong>Product</strong>
+            <a href="#features">Features</a>
+            <a href="#ai-workflow">AI workflow</a>
+            <a href="#download">Download</a>
+          </div>
+          <div>
+            <strong>Developers</strong>
+            <a href="https://github.com/5ivesaw/FiveCut">GitHub</a>
+            <a href="https://github.com/5ivesaw/FiveCut/blob/main/SKILL.md">Agent skill</a>
+            <a href="https://github.com/5ivesaw/FiveCut/tree/main/packages/editor-api">Project API</a>
+          </div>
+          <div>
+            <strong>Project</strong>
+            <a href="https://github.com/5ivesaw/FiveCut/releases">Releases</a>
+            <a href="https://github.com/5ivesaw/FiveCut/issues">Issues</a>
+            <a href="https://github.com/5ivesaw/FiveCut/blob/main/LICENSE">MIT license</a>
+          </div>
+        </div>
+      </div>
+      <div class="section-shell footer-bottom">
+        <span>© <span data-year>2026</span> FiveCut.</span>
+        <span>Independent open-source project based on OpenCut.</span>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" data-toast>
+      Command copied
+    </div>
+  </body>
+</html>
