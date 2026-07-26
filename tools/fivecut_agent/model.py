@@ -79,6 +79,10 @@ def project_sha256(path: Path) -> str:
 
 
 def atomic_write_json(path: Path, value: Any) -> None:
+    atomic_write_bytes(path, canonical_json_bytes(value))
+
+
+def atomic_write_bytes(path: Path, value: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(
         prefix=f".{path.name}.", suffix=".tmp", dir=path.parent
@@ -86,7 +90,7 @@ def atomic_write_json(path: Path, value: Any) -> None:
     temporary = Path(temporary_name)
     try:
         with os.fdopen(descriptor, "wb") as handle:
-            handle.write(canonical_json_bytes(value))
+            handle.write(value)
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)

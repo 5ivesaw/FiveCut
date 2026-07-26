@@ -15,9 +15,12 @@ all decisions reproducible, all mutations transactional, and all renders logged.
    `fivecut-agent init . --name "<project name>"`.
 3. Run `fivecut-agent scan .` to index video, audio, images, subtitles, and
    fonts. Never guess durations, frame rates, stream layouts, or file names.
-4. Read the user's request and `.fivecut/media-index.json`.
-5. Inspect existing state with `fivecut-agent inspect fivecut.project.json`.
-6. Validate before changing anything:
+4. Run `fivecut-agent analyze fivecut.project.json` to collect scene changes,
+   silence, freeze/black-frame intervals, loudness, and contact sheets.
+5. Read the user's request, `.fivecut/media-index.json`, and
+   `.fivecut/analysis/latest.json`.
+6. Inspect existing state with `fivecut-agent inspect fivecut.project.json`.
+7. Validate before changing anything:
    `fivecut-agent validate fivecut.project.json --verify-hashes`.
 
 Read [references/project-format.md](references/project-format.md) when creating

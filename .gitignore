@@ -27,5 +27,7 @@ dist/
 release/
 
 target/
+__pycache__/
+*.py[cod]
 
 .cargo-tools/

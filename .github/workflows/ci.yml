@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends ffmpeg
       - name: Validate JSON files
         run: |
           jq empty \
@@ -28,12 +32,21 @@ jobs:
             packages/editor-api/schemas/fivecut-command-package.schema.json
       - name: Compile Python agent tools
         run: python3 -m compileall -q tools/fivecut_agent
+      - name: Test agent contracts and renderer
+        run: python3 -m unittest discover -s tools/fivecut_agent/tests -v
 
   rust:
     name: Rust core
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install desktop link libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libxcb1-dev \
+            libxkbcommon-dev \
+            libxkbcommon-x11-dev
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Check
@@ -57,9 +70,13 @@ jobs:
           key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
           restore-keys: bun-${{ runner.os }}-
       - name: Install dependencies
-        run: bun install
-      - name: Typecheck
-        run: bunx tsc -p apps/web/tsconfig.json --noEmit
+        run: bun install --frozen-lockfile
+      - name: Generate content and route types
+        working-directory: apps/web
+        run: bun --bun x next typegen
+      - name: Typecheck with the web workspace compiler
+        working-directory: apps/web
+        run: bun x tsc --noEmit
       - name: Unit tests
         run: bun test
       - name: Production build
