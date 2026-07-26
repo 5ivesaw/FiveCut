@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 128" role="img" aria-labelledby="title">
+  <title id="title">FiveCut</title>
+  <g transform="translate(0)">
+    <path d="M20 58V42c0-12 9-21 21-21h21c5 0 9 4 9 9v7H57v-3H42c-5 0-9 4-9 9v15H20Z" fill="#e7e5e4"/>
+    <path d="M22 51h45c13 0 23 10 23 23v17c0 9-7 16-16 16H29c-9 0-16-7-16-16V60c0-5 4-9 9-9Z" fill="#f97316"/>
+    <path d="M86 60h20c7 0 12 6 12 13v12c0 7-5 12-12 12H85V60Z" fill="#94a3b8" stroke="#e2e8f0" stroke-width="3"/>
+    <path d="M91 66h14c4 0 7 3 7 7v12c0 4-3 7-7 7H91" fill="#292524"/>
+    <path d="M92 63h14M92 96h14M112 68v22" fill="none" stroke="#f8fafc" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 6"/>
+    <path d="M29 65h31c8 0 14 6 14 14s-6 14-14 14H29V65Z" fill="#1c1917"/>
+    <path d="M32 71h25c5 0 9 3 9 8s-4 8-9 8H32V71Z" fill="#fbbf24"/>
+  </g>
+  <text x="144" y="90" fill="#f5f5f4" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="72" font-weight="800" letter-spacing="-3">Five<tspan fill="#f97316">Cut</tspan></text>
+</svg>

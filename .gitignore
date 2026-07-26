@@ -1,0 +1,31 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# asdf version management
+.tool-versions
+
+node_modules
+.tools/
+.archive/
+.cursorignore
+.turbo
+
+.env*
+!*.env.example
+
+# cursor
+bun.lockb
+
+# content-collections
+.content-collections
+
+# Twiggy
+.cursor/
+
+.open-next
+.next
+dist/
+release/
+
+target/
+
+.cargo-tools/

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="burst">
+      <stop stop-color="#facc15"/>
+      <stop offset=".45" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#9a3412"/>
+    </radialGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="3.2" fill="#1c1917" opacity=".3"/>
+    </pattern>
+  </defs>
+  <path fill="url(#burst)" d="M0 0h1920v1080H0z"/>
+  <path fill="url(#dots)" d="M0 0h1920v1080H0z"/>
+  <g fill="#fff7ed" opacity=".2">
+    <path d="M960 540 0 375V260zM960 540 0 820v170zM960 540l960-330V50zM960 540l960 230v185z"/>
+  </g>
+</svg>

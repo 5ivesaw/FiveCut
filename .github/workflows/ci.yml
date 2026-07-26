@@ -1,0 +1,68 @@
+name: FiveCut CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: fivecut-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Agent contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON files
+        run: |
+          jq empty \
+            packages/editor-api/fivecut.config.json \
+            packages/editor-api/schemas/fivecut-project.schema.json \
+            packages/editor-api/schemas/fivecut-command-package.schema.json
+      - name: Compile Python agent tools
+        run: python3 -m compileall -q tools/fivecut_agent
+
+  rust:
+    name: Rust core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Check
+        run: cargo check --workspace --locked
+      - name: Test
+        run: cargo test --workspace --locked
+
+  web:
+    name: Web editor
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.18
+      - name: Cache Bun downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - name: Install dependencies
+        run: bun install
+      - name: Typecheck
+        run: bunx tsc -p apps/web/tsconfig.json --noEmit
+      - name: Unit tests
+        run: bun test
+      - name: Production build
+        run: bun run build:web
+        env:
+          FIVECUT_OFFLINE: "1"

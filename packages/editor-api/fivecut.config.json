@@ -1,0 +1,19 @@
+{
+  "apiVersion": "1.0.0",
+  "projectSchema": "./schemas/fivecut-project.schema.json",
+  "commandPackageSchema": "./schemas/fivecut-command-package.schema.json",
+  "timeUnit": "seconds",
+  "defaultProjectFile": "fivecut.project.json",
+  "stateDirectory": ".fivecut",
+  "historyDirectory": ".fivecut/history",
+  "logDirectory": ".fivecut/logs",
+  "mediaIndexFile": ".fivecut/media-index.json",
+  "capabilities": [
+    "asset-index-v1",
+    "transactional-commands-v1",
+    "ffmpeg-render-v1",
+    "captions-v1",
+    "keyframes-v1",
+    "color-grade-v1"
+  ]
+}

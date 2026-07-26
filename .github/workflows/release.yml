@@ -1,0 +1,54 @@
+name: Build FiveCut release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    name: Linux offline bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.18
+      - name: Install dependencies
+        run: bun install
+      - name: Build offline editor
+        run: bun run build:web
+        env:
+          FIVECUT_OFFLINE: "0"
+      - name: Assemble portable bundle
+        run: |
+          set -euo pipefail
+          mkdir -p release/FiveCut/apps/web/.next
+          cp -R apps/web/.next/standalone/. release/FiveCut/
+          cp -R apps/web/.next/static release/FiveCut/apps/web/.next/static
+          cp -R apps/web/public release/FiveCut/apps/web/public
+          cp LICENSE README.md release/FiveCut/
+          tar -C release -czf release/FiveCut-linux-x64.tar.gz FiveCut
+          sha256sum release/FiveCut-linux-x64.tar.gz > release/FiveCut-linux-x64.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FiveCut-linux-x64
+          path: |
+            release/FiveCut-linux-x64.tar.gz
+            release/FiveCut-linux-x64.tar.gz.sha256
+          if-no-files-found: error
+      - name: Publish tagged release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            release/FiveCut-linux-x64.tar.gz \
+            release/FiveCut-linux-x64.tar.gz.sha256 \
+            --generate-notes \
+            --title "FiveCut ${GITHUB_REF_NAME}"

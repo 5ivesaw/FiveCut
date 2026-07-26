@@ -1,0 +1,4 @@
+interface:
+  display_name: "FiveCut Editor Agent"
+  short_description: "Plan, validate, and render FiveCut projects"
+  default_prompt: "Use $fivecut-editor-agent to inspect my media, build a safe edit plan, and render the finished video."
