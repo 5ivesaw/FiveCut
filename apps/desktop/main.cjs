@@ -8,7 +8,14 @@ const {
 	session,
 	shell,
 } = require("electron");
-const { createWriteStream, existsSync, mkdirSync } = require("node:fs");
+const {
+	appendFileSync,
+	closeSync,
+	existsSync,
+	mkdirSync,
+	openSync,
+	writeSync,
+} = require("node:fs");
 const http = require("node:http");
 const net = require("node:net");
 const path = require("node:path");
@@ -21,7 +28,7 @@ if (isSmokeTest) app.disableHardwareAcceleration();
 
 let mainWindow = null;
 let serverProcess = null;
-let serverLog = null;
+let serverLogPath = null;
 
 function findServerScript() {
 	const webRoot = path.join(__dirname, "web");
@@ -60,28 +67,38 @@ function startServer({ port }) {
 	const serverScript = findServerScript();
 	const logDirectory = app.getPath("logs");
 	mkdirSync(logDirectory, { recursive: true });
-	serverLog = createWriteStream(path.join(logDirectory, "fivecut-server.log"), {
-		flags: "a",
-	});
-	serverLog.write(`\n--- FiveCut ${new Date().toISOString()} ---\n`);
-
-	serverProcess = spawn(process.execPath, [serverScript], {
-		cwd: path.dirname(serverScript),
-		env: {
-			...process.env,
-			ELECTRON_RUN_AS_NODE: "1",
-			FIVECUT_OFFLINE: "1",
-			HOSTNAME: "127.0.0.1",
-			NEXT_TELEMETRY_DISABLED: "1",
-			NODE_ENV: "production",
-			PORT: String(port),
-		},
-		stdio: ["ignore", serverLog, serverLog],
-		windowsHide: true,
-	});
+	serverLogPath = path.join(logDirectory, "fivecut-server.log");
+	const serverLogDescriptor = openSync(serverLogPath, "a");
+	writeSync(
+		serverLogDescriptor,
+		`\n--- FiveCut ${new Date().toISOString()} ---\n`,
+	);
+	try {
+		serverProcess = spawn(process.execPath, [serverScript], {
+			cwd: path.dirname(serverScript),
+			env: {
+				...process.env,
+				ELECTRON_RUN_AS_NODE: "1",
+				FIVECUT_OFFLINE: "1",
+				HOSTNAME: "127.0.0.1",
+				NEXT_TELEMETRY_DISABLED: "1",
+				NODE_ENV: "production",
+				PORT: String(port),
+			},
+			stdio: ["ignore", serverLogDescriptor, serverLogDescriptor],
+			windowsHide: true,
+		});
+	} finally {
+		closeSync(serverLogDescriptor);
+	}
 
 	serverProcess.once("error", (error) => {
-		serverLog?.write(`Server process error: ${error.stack ?? error}\n`);
+		if (serverLogPath) {
+			appendFileSync(
+				serverLogPath,
+				`Server process error: ${error.stack ?? error}\n`,
+			);
+		}
 	});
 	return serverProcess;
 }
@@ -261,8 +278,6 @@ function stopServer() {
 		killTimer.unref();
 	}
 	serverProcess = null;
-	serverLog?.end();
-	serverLog = null;
 }
 
 function failStartup(error) {
