@@ -9,32 +9,138 @@ on:
 permissions:
   contents: write
 
+env:
+  BUN_VERSION: "1.2.18"
+  ELECTRON_VERSION: "43.2.0"
+  ELECTRON_LINUX_X64_SHA256: "f77ca6ed67bbc68702b69b56ad499bca6ae090705ade7d04f0ac545e409dec68"
+  WASM_PACK_VERSION: "0.15.0"
+  WASM_PACK_LINUX_X64_SHA256: "c09f971ecaed9a2efc80fdcea7a00ef6b53c7fadc8c57d1f61b53a6aa66b668a"
+
 jobs:
   linux:
-    name: Linux offline bundle
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    name: Linux x64 desktop
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install smoke-test libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libasound2t64 \
+            libgbm1 \
+            libgtk-3-0t64 \
+            libnss3 \
+            libxss1 \
+            xvfb
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: release-wasm
+
+      - name: Install verified wasm-pack
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/wasm-pack.tar.gz"
+          destination="${RUNNER_TEMP}/wasm-pack"
+          curl --fail --location --retry 3 \
+            "https://github.com/wasm-bindgen/wasm-pack/releases/download/v${WASM_PACK_VERSION}/wasm-pack-v${WASM_PACK_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+            --output "${archive}"
+          echo "${WASM_PACK_LINUX_X64_SHA256}  ${archive}" | sha256sum --check -
+          mkdir -p "${destination}"
+          tar --extract --gzip --file "${archive}" \
+            --directory "${destination}" --strip-components=1
+          echo "${destination}" >> "${GITHUB_PATH}"
+
+      - name: Build local editor WebAssembly
+        run: wasm-pack build rust/wasm --target bundler --out-dir pkg --release
+
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.2.18
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Cache Bun downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
       - name: Install dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
+      - name: Test contracts and web application
+        run: |
+          bun test
+          python3 -m unittest discover -s tools/fivecut_agent/tests -v
       - name: Build offline editor
         run: bun run build:web
         env:
-          FIVECUT_OFFLINE: "0"
-      - name: Assemble portable bundle
+          FIVECUT_OFFLINE: "1"
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Download verified Electron runtime
         run: |
           set -euo pipefail
-          mkdir -p release/FiveCut/apps/web/.next
-          cp -R apps/web/.next/standalone/. release/FiveCut/
-          cp -R apps/web/.next/static release/FiveCut/apps/web/.next/static
-          cp -R apps/web/public release/FiveCut/apps/web/public
-          cp LICENSE README.md release/FiveCut/
+          archive="${RUNNER_TEMP}/electron-linux-x64.zip"
+          curl --fail --location --retry 3 \
+            "https://github.com/electron/electron/releases/download/v${ELECTRON_VERSION}/electron-v${ELECTRON_VERSION}-linux-x64.zip" \
+            --output "${archive}"
+          echo "${ELECTRON_LINUX_X64_SHA256}  ${archive}" | sha256sum --check -
+          mkdir -p release/FiveCut/runtime
+          unzip -q "${archive}" -d release/FiveCut/runtime
+
+      - name: Assemble portable desktop
+        run: |
+          set -euo pipefail
+          mkdir -p release/FiveCut/app/web
+          cp -R apps/web/.next/standalone/. release/FiveCut/app/web/
+
+          if [ -f release/FiveCut/app/web/apps/web/server.js ]; then
+            web_app_root="release/FiveCut/app/web/apps/web"
+          elif [ -f release/FiveCut/app/web/server.js ]; then
+            web_app_root="release/FiveCut/app/web"
+          else
+            echo "Next standalone server.js was not produced" >&2
+            exit 1
+          fi
+
+          mkdir -p "${web_app_root}/.next"
+          cp -R apps/web/.next/static "${web_app_root}/.next/static"
+          cp -R apps/web/public "${web_app_root}/public"
+
+          cp apps/desktop/main.cjs apps/desktop/package.json release/FiveCut/app/
+          cp apps/web/public/logos/fivecut/icon.svg release/FiveCut/app/icon.svg
+          cp packaging/linux/fivecut release/FiveCut/fivecut
+          cp packaging/linux/install.sh release/FiveCut/install.sh
+          cp packaging/linux/app.fivecut.FiveCut.desktop release/FiveCut/
+          cp apps/web/public/logos/fivecut/icon.svg release/FiveCut/icon.svg
+          cp packaging/linux/README.md release/FiveCut/DESKTOP.md
+          cp LICENSE NOTICE.md README.md release/FiveCut/
+
+          mkdir -p release/FiveCut/bin release/FiveCut/tools \
+            release/FiveCut/packages release/FiveCut/skills
+          cp bin/fivecut-agent release/FiveCut/bin/
+          cp -R tools/fivecut_agent release/FiveCut/tools/
+          cp -R packages/editor-api release/FiveCut/packages/
+          cp -R skills/fivecut-editor-agent release/FiveCut/skills/
+          cp -L SKILL.md release/FiveCut/SKILL.md
+          chmod 0755 release/FiveCut/fivecut release/FiveCut/install.sh \
+            release/FiveCut/bin/fivecut-agent
+
+      - name: Smoke-test the packaged desktop
+        run: |
+          xvfb-run -a timeout 90s release/FiveCut/fivecut \
+            --smoke-test --disable-gpu
+
+      - name: Archive release
+        run: |
+          set -euo pipefail
           tar -C release -czf release/FiveCut-linux-x64.tar.gz FiveCut
-          sha256sum release/FiveCut-linux-x64.tar.gz > release/FiveCut-linux-x64.tar.gz.sha256
+          sha256sum release/FiveCut-linux-x64.tar.gz \
+            > release/FiveCut-linux-x64.tar.gz.sha256
+
       - uses: actions/upload-artifact@v4
         with:
           name: FiveCut-linux-x64
@@ -42,6 +148,7 @@ jobs:
             release/FiveCut-linux-x64.tar.gz
             release/FiveCut-linux-x64.tar.gz.sha256
           if-no-files-found: error
+
       - name: Publish tagged release
         if: startsWith(github.ref, 'refs/tags/v')
         env:

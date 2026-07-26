@@ -11,3 +11,7 @@ synthetic sound effects are released under CC0-1.0.
 
 The source tree also uses third-party packages listed in `package.json`,
 `apps/web/package.json`, and `Cargo.lock`. Their respective licenses apply.
+
+Linux desktop releases bundle the Electron runtime and Chromium components.
+Their copyright notices and licenses are included inside the release's
+`runtime` directory. FiveCut does not remove or replace those notices.

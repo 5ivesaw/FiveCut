@@ -9,8 +9,8 @@
 </p>
 
 > FiveCut is under active development. Core editing comes from the mature
-> OpenCut v0.3 editor; desktop packaging, automated releases, and the agent API
-> are being completed and tested in this repository.
+> OpenCut v0.3 editor, while FiveCut adds a local desktop release, creator
+> assets, effects, and a deterministic external-AI project API.
 
 ## What already works
 
@@ -49,6 +49,21 @@ bun run dev:web
 
 The local editor opens at `http://localhost:3000/projects`.
 
+## Linux desktop release
+
+Download `FiveCut-linux-x64.tar.gz` from
+[GitHub Releases](https://github.com/5ivesaw/FiveCut/releases), then:
+
+```bash
+tar -xzf FiveCut-linux-x64.tar.gz
+cd FiveCut
+./fivecut
+```
+
+The archive contains its own Electron runtime and local FiveCut server. Run
+`./install.sh` only if you also want a `fivecut` terminal command and an
+application-menu entry.
+
 ## AI editing API
 
 The stable contract lives in [`packages/editor-api`](packages/editor-api).
@@ -56,13 +71,17 @@ Agents should read [`SKILL.md`](SKILL.md) and use `fivecut-agent` to scan media,
 validate projects, apply hash-guarded command packages, and render with FFmpeg.
 All AI operations are designed to be deterministic, logged, and recoverable.
 
-Detailed agent documentation and import UI are being completed as part of the
-first FiveCut release.
+External AI sites can return a complete `fivecut-project` JSON file. Use
+**Import AI edit** on FiveCut's Projects screen, select that file and its
+referenced media, and FiveCut validates paths, hashes, capabilities, timing, and
+media before storing the editable project. No built-in LLM or API key is
+required.
 
 ## Automated builds
 
 - `FiveCut CI` checks the Rust core, web editor, and agent contracts.
-- `Build FiveCut release` creates a portable Linux artifact.
+- `Build FiveCut release` creates and smoke-tests a portable Linux desktop
+  artifact on a virtual display.
 - Pushing a `v*` tag publishes the artifact and checksum as a GitHub Release.
 
 ## Attribution

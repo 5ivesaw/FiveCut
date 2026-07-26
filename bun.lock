@@ -15,6 +15,10 @@
         "typescript": "^6.0.2",
       },
     },
+    "apps/desktop": {
+      "name": "@fivecut/desktop",
+      "version": "0.1.0",
+    },
     "apps/web": {
       "name": "@opencut/web",
       "version": "0.1.0",

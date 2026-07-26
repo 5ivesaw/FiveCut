@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+
+bundle_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+electron="$bundle_dir/runtime/electron"
+app_dir="$bundle_dir/app"
+
+if [ ! -x "$electron" ]; then
+    printf 'FiveCut runtime is missing: %s\n' "$electron" >&2
+    exit 1
+fi
+if [ ! -f "$app_dir/package.json" ]; then
+    printf 'FiveCut application files are missing: %s\n' "$app_dir" >&2
+    exit 1
+fi
+
+if [ "$(id -u)" -eq 0 ]; then
+    exec "$electron" --no-sandbox "$app_dir" "$@"
+fi
+
+exec "$electron" "$app_dir" "$@"

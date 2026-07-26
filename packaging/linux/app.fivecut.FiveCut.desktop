@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=FiveCut
+GenericName=Video Editor
+Comment=Local-first video editing for creators
+Exec=@EXEC@
+Icon=fivecut
+Terminal=false
+Categories=AudioVideo;AudioVideoEditing;Video;
+Keywords=video;editor;timeline;cut;media;creator;
+StartupNotify=true
+StartupWMClass=FiveCut
+DBusActivatable=false
