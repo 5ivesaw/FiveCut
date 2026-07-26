@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">FiveCut desktop video editor</title>
+  <desc id="description">FiveCut logo and an orange-accented video editing timeline on a dark background.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="0%" r="85%">
+      <stop offset="0" stop-color="#6b2708"/>
+      <stop offset=".42" stop-color="#17100c"/>
+      <stop offset="1" stop-color="#090807"/>
+    </radialGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ff9a4c"/>
+      <stop offset="1" stop-color="#ec5905"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f7fafc"/>
+      <stop offset=".55" stop-color="#9aa6b2"/>
+      <stop offset="1" stop-color="#45515d"/>
+    </linearGradient>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0v52" fill="none" stroke="#fff" stroke-opacity=".035"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="26" stdDeviation="24" flood-opacity=".5"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <g transform="translate(76 69)">
+    <path d="M14 41V26c0-11 8-19 19-19h19c5 0 8 3 8 8v7H48v-3H34c-5 0-8 3-8 8v14H14Z" fill="#e7e5e4"/>
+    <path d="M16 35h41c12 0 21 9 21 21v15c0 8-6 15-14 15H22c-8 0-14-7-14-15V43c0-4 4-8 8-8Z" fill="url(#orange)"/>
+    <path d="M74 43h18c6 0 11 5 11 12v11c0 6-5 11-11 11H73V43Z" fill="url(#steel)" stroke="#dfe6ed" stroke-width="3"/>
+    <path d="M79 48h12c4 0 7 3 7 7v11c0 4-3 7-7 7H79" fill="#292524"/>
+    <path d="M81 46h11M81 79h11M98 50v23" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 5"/>
+    <path d="M23 47h28c7 0 13 6 13 13s-6 13-13 13H23V47Z" fill="#1c1917"/>
+    <path d="M26 52h22c5 0 8 3 8 8s-3 8-8 8H26V52Z" fill="#fbbf24"/>
+    <text x="127" y="72" fill="#f5f3ef" font-family="Inter, Arial, sans-serif" font-size="57" font-weight="800" letter-spacing="-3">Five<tspan fill="#ff7417">Cut</tspan></text>
+  </g>
+  <text x="78" y="230" fill="#f5f3ef" font-family="Inter, Arial, sans-serif" font-size="71" font-weight="780" letter-spacing="-5">Cut deeper.</text>
+  <text x="78" y="300" fill="#ff8a3c" font-family="Inter, Arial, sans-serif" font-size="71" font-weight="780" letter-spacing="-5">Finish faster.</text>
+  <text x="82" y="355" fill="#9a958e" font-family="Inter, Arial, sans-serif" font-size="21">A local-first desktop video editor.</text>
+  <g transform="translate(80 423)" filter="url(#shadow)">
+    <rect width="1040" height="164" rx="17" fill="#111012" stroke="#fff" stroke-opacity=".14"/>
+    <rect x="0" y="0" width="1040" height="37" rx="17" fill="#1a191b"/>
+    <path d="M0 37h1040" stroke="#fff" stroke-opacity=".1"/>
+    <circle cx="22" cy="18.5" r="4" fill="#4b4749"/>
+    <circle cx="36" cy="18.5" r="4" fill="#4b4749"/>
+    <circle cx="50" cy="18.5" r="4" fill="#4b4749"/>
+    <text x="520" y="22" fill="#777277" font-family="monospace" font-size="9" text-anchor="middle">creator-intro.fcproject</text>
+    <g transform="translate(18 51)">
+      <text x="0" y="13" fill="#777277" font-family="monospace" font-size="8">V2</text>
+      <rect x="34" y="0" width="191" height="21" rx="4" fill="#6e4a20" stroke="#e4a74c" stroke-opacity=".45"/>
+      <rect x="235" y="0" width="164" height="21" rx="4" fill="#6e4a20" stroke="#e4a74c" stroke-opacity=".45"/>
+      <rect x="413" y="0" width="221" height="21" rx="4" fill="#6e4a20" stroke="#e4a74c" stroke-opacity=".45"/>
+      <text x="0" y="45" fill="#777277" font-family="monospace" font-size="8">V1</text>
+      <rect x="34" y="30" width="285" height="27" rx="4" fill="#2d4a3f" stroke="#75b49a" stroke-opacity=".5"/>
+      <rect x="325" y="30" width="253" height="27" rx="4" fill="#533436" stroke="#aa6d70" stroke-opacity=".5"/>
+      <rect x="584" y="30" width="393" height="27" rx="4" fill="#2d4053" stroke="#6b94b9" stroke-opacity=".5"/>
+      <text x="0" y="80" fill="#777277" font-family="monospace" font-size="8">A1</text>
+      <rect x="34" y="65" width="943" height="25" rx="4" fill="#21563d" stroke="#66d19e" stroke-opacity=".5"/>
+      <path d="M43 78h12l5-8 7 15 8-13 8 10 8-6 8 3 8-8 8 14 8-11 8 6 8-2 8-9 8 16 8-13 8 7 8-4 8 6 8-10 8 15 8-11 8 7 8-3 8-8 8 13 8-10 8 6h510" fill="none" stroke="#75dbaa" stroke-opacity=".7"/>
+      <path d="M452 -10v108" stroke="#ff7417" stroke-width="2"/>
+      <path d="m446 -10h12l-3 8h-6Z" fill="#ff7417"/>
+    </g>
+  </g>
+</svg>
