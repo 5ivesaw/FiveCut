@@ -14,10 +14,20 @@ if [ ! -f "$app_dir/package.json" ]; then
     exit 1
 fi
 
+sandbox_flag=--disable-setuid-sandbox
+
+# Portable archives cannot ship a root-owned setuid helper. Prefer Chromium's
+# unprivileged user-namespace sandbox, but Ubuntu 23.10+ blocks it for
+# unconfined portable binaries through AppArmor. Use the compatibility fallback
+# only when the host explicitly disables that sandbox (or when run as root).
 if [ "$(id -u)" -eq 0 ]; then
-    exec "$electron" --no-sandbox "$app_dir" "$@"
+    sandbox_flag=--no-sandbox
+elif [ -r /proc/sys/kernel/apparmor_restrict_unprivileged_userns ] &&
+     [ "$(sed -n '1p' /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1" ]; then
+    sandbox_flag=--no-sandbox
+elif [ -r /proc/sys/kernel/unprivileged_userns_clone ] &&
+     [ "$(sed -n '1p' /proc/sys/kernel/unprivileged_userns_clone)" = "0" ]; then
+    sandbox_flag=--no-sandbox
 fi
 
-# Portable archives cannot ship a root-owned setuid helper. Chromium falls
-# back to the unprivileged user-namespace sandbox on supported Linux systems.
-exec "$electron" --disable-setuid-sandbox "$app_dir" "$@"
+exec "$electron" "$sandbox_flag" "$app_dir" "$@"
