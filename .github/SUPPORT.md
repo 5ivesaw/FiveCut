@@ -1,27 +1,15 @@
-# Getting Help
+# Getting help with FiveCut
 
-Thanks for using OpenCut! If you need help, here are your options:
+Use the repository's GitHub features so questions and fixes stay searchable:
 
-## Documentation
+- [Report a bug](https://github.com/5ivesaw/FiveCut/issues/new?template=bug_report.yml)
+- [Request a feature](https://github.com/5ivesaw/FiveCut/issues/new?template=feature_request.yml)
+- [Browse existing issues](https://github.com/5ivesaw/FiveCut/issues)
+- [Read the setup and agent documentation](../README.md)
 
-- Check our [README](../README.md) for basic setup instructions
-- Review the [Contributing Guidelines](CONTRIBUTING.md) for development setup
+Include your FiveCut version, operating system, exact reproduction steps, and
+relevant logs. Remove private media, credentials, and personal information
+before attaching files.
 
-## Issues
-
-- **Bug reports**: Use the bug report template
-- **Feature requests**: Use the feature request template
-- **Questions**: Use GitHub Discussions for general questions
-
-## Community
-
-- Join our discussions on GitHub
-- Follow the [Code of Conduct](CODE_OF_CONDUCT.md)
-
-## Response Times
-
-- Issues are typically triaged within 2-3 business days
-- Feature requests may take longer to evaluate
-- Security issues are handled with priority
-
-We appreciate your patience and contributions to making OpenCut better!
+Security problems must use the private process in [SECURITY.md](SECURITY.md),
+not a public issue.

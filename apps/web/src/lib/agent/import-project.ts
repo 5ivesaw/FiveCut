@@ -48,6 +48,7 @@ const SUPPORTED_CAPABILITIES = new Set([
 	"captions-v1",
 	"keyframes-v1",
 	"color-grade-v1",
+	"freeze-frame-v1",
 ]);
 
 export class FiveCutImportError extends Error {
@@ -498,20 +499,44 @@ function buildElement({
 			0,
 			sourceDuration - trimStart - selectedSourceDuration,
 		);
+		if (
+			clip.freezeFrameSourceTime !== undefined &&
+			asset.type !== "video"
+		) {
+			throw new FiveCutImportError(
+				`Clip ${clip.id} can only freeze a video asset.`,
+			);
+		}
+		if (
+			clip.freezeFrameSourceTime !== undefined &&
+			clip.freezeFrameSourceTime >= sourceDuration
+		) {
+			throw new FiveCutImportError(
+				`Clip ${clip.id} freezes beyond the end of ${asset.name}.`,
+			);
+		}
 		if (asset.type === "video" && trackKind !== "audio") {
+			const isFreezeFrame = clip.freezeFrameSourceTime !== undefined;
 			element = {
 				...base,
 				type: "video",
 				mediaId: asset.id,
-				sourceDuration: toTicks(sourceDuration),
-				trimStart: toTicks(trimStart),
-				trimEnd: toTicks(trimEnd),
-				volume: clip.volumeDb ?? DEFAULTS.element.volume,
-				muted: clip.muted ?? false,
-				isSourceAudioEnabled: clip.includeSourceAudio ?? true,
+				sourceDuration: isFreezeFrame ? undefined : toTicks(sourceDuration),
+				trimStart: isFreezeFrame ? 0 : toTicks(trimStart),
+				trimEnd: isFreezeFrame ? 0 : toTicks(trimEnd),
+				freezeFrameSourceTime: isFreezeFrame
+					? toTicks(clip.freezeFrameSourceTime ?? 0)
+					: undefined,
+				volume: isFreezeFrame
+					? 0
+					: (clip.volumeDb ?? DEFAULTS.element.volume),
+				muted: isFreezeFrame ? true : (clip.muted ?? false),
+				isSourceAudioEnabled: isFreezeFrame
+					? false
+					: (clip.includeSourceAudio ?? true),
 				hidden: false,
 				retime:
-					clip.speed && clip.speed !== 1
+					!isFreezeFrame && clip.speed && clip.speed !== 1
 						? { rate: clip.speed, maintainPitch: true }
 						: undefined,
 				transform: importTransform(clip),

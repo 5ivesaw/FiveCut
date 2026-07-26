@@ -3,7 +3,6 @@
 import { ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { SOCIAL_LINKS } from "@/lib/site/social";
 import { useLocalStorage } from "@/hooks/storage/use-local-storage";
 import { Button } from "../ui/button";
 import { Dialog, DialogBody, DialogContent, DialogTitle } from "../ui/dialog";
@@ -28,13 +27,13 @@ export function Onboarding() {
 	const getStepTitle = () => {
 		switch (step) {
 			case 0:
-				return "Welcome to OpenCut Beta! 🎉";
+				return "Welcome to FiveCut";
 			case 1:
-				return "⚠️ This is a super early beta!";
+				return "Local by default";
 			case 2:
-				return "🦋 Have fun testing!";
+				return "Ready to cut";
 			default:
-				return "OpenCut Onboarding";
+				return "FiveCut Onboarding";
 		}
 	};
 
@@ -44,8 +43,8 @@ export function Onboarding() {
 				return (
 					<div className="space-y-5">
 						<div className="space-y-3">
-							<Title title="Welcome to OpenCut Beta! 🎉" />
-							<Description description="You're among the first to try OpenCut - the fully open source CapCut alternative." />
+							<Title title="Welcome to FiveCut" />
+							<Description description="A local-first editor built for fast, focused creator workflows." />
 						</div>
 						<NextButton onClick={handleNext}>Next</NextButton>
 					</div>
@@ -55,9 +54,8 @@ export function Onboarding() {
 					<div className="space-y-5">
 						<div className="space-y-3">
 							<Title title={getStepTitle()} />
-							<Description description="There's still a ton of things to do to make this editor amazing." />
-							<Description description="A lot of features are still missing. We're working hard to build them out!" />
-							<Description description="If you're curious, check out our roadmap [here](https://opencut.app/roadmap)" />
+							<Description description="Projects and source media stay on this device. Core editing and export work without an internet connection." />
+							<Description description="Online asset search is optional; bundled graphics and your imported media remain available offline." />
 						</div>
 						<NextButton onClick={handleNext}>Next</NextButton>
 					</div>
@@ -67,9 +65,7 @@ export function Onboarding() {
 					<div className="space-y-5">
 						<div className="space-y-3">
 							<Title title={getStepTitle()} />
-							<Description
-								description={`Join our [Discord](${SOCIAL_LINKS.discord}), chat with cool people and share feedback to help make OpenCut the best editor ever.`}
-							/>
+							<Description description="Create a project, import footage, then drag clips onto the timeline. You can also import a validated AI edit from the Projects screen." />
 						</div>
 						<NextButton onClick={handleClose}>Finish</NextButton>
 					</div>

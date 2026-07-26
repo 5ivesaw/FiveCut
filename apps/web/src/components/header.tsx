@@ -16,7 +16,10 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "@/utils/ui";
-import { DEFAULT_LOGO_URL, SITE_URL } from "@/lib/site/brand";
+import {
+	DEFAULT_LOGO_URL,
+	DOWNLOAD_SITE_URL,
+} from "@/lib/site/brand";
 import { SOCIAL_LINKS } from "@/lib/site/social";
 import {
 	ContextMenu,
@@ -31,20 +34,20 @@ export function Header() {
 
 	const links = [
 		{
+			label: "Download",
+			href: DOWNLOAD_SITE_URL,
+		},
+		{
 			label: "Roadmap",
 			href: "/roadmap",
 		},
 		{
-			label: "Contributors",
-			href: "/contributors",
+			label: "Releases",
+			href: `${SOCIAL_LINKS.github}/releases`,
 		},
 		{
-			label: "Sponsors",
-			href: "/sponsors",
-		},
-		{
-			label: "Blog",
-			href: "/blog",
+			label: "Docs",
+			href: `${SOCIAL_LINKS.github}#readme`,
 		},
 	];
 
@@ -57,7 +60,7 @@ export function Header() {
 							<Link href="/" className="flex items-center gap-3">
 								<Image
 									src={DEFAULT_LOGO_URL}
-									alt="OpenCut Logo"
+									alt="FiveCut logo"
 									className="invert dark:invert-0"
 									width={32}
 									height={32}
@@ -79,7 +82,7 @@ export function Header() {
 								onClick={() => {
 									const a = document.createElement("a");
 									a.href = DEFAULT_LOGO_URL;
-									a.download = "opencut-logo.svg";
+									a.download = "fivecut-logo.svg";
 									a.click();
 								}}
 							>
@@ -121,7 +124,7 @@ export function Header() {
 						<Link href={SOCIAL_LINKS.github}>
 							<Button className="bg-background text-sm" variant="outline">
 								<HugeiconsIcon icon={GithubIcon} className="size-4" />
-								40k+
+								GitHub
 							</Button>
 						</Link>
 						<Link href="/projects">

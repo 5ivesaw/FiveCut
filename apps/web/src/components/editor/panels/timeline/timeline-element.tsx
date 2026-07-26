@@ -68,6 +68,7 @@ import {
 	Exchange01Icon,
 	KeyframeIcon,
 	MagicWand05Icon,
+	SnowIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { uppercase } from "@/utils/string";
@@ -1103,9 +1104,22 @@ function TiledMediaContent({
 				}}
 			/>
 			<MediaElementHeader
-				name={mediaAsset?.name}
+				name={
+					element.type === "video" &&
+					element.freezeFrameSourceTime !== undefined
+						? element.name
+						: mediaAsset?.name
+				}
 				leading={
-					hasElementEffects({ element }) ? (
+					element.type === "video" &&
+					element.freezeFrameSourceTime !== undefined ? (
+						<div className="flex items-center gap-1 text-sky-100">
+							<HugeiconsIcon icon={SnowIcon} size={12} />
+							{hasElementEffects({ element }) ? (
+								<EffectsButton element={element} track={track} />
+							) : null}
+						</div>
+					) : hasElementEffects({ element }) ? (
 						<EffectsButton element={element} track={track} />
 					) : null
 				}

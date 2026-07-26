@@ -45,7 +45,6 @@ import {
 	type MediaViewMode,
 	useAssetsPanelStore,
 } from "@/stores/assets-panel-store";
-import { MASKABLE_ELEMENT_TYPES } from "@/lib/timeline";
 import type { MediaAsset } from "@/lib/media/types";
 import { cn } from "@/utils/ui";
 import {
@@ -283,9 +282,8 @@ function MediaAssetDraggable({
 				type: "media",
 				mediaType: item.type,
 				name: item.name,
-				...(item.type !== "audio" && {
-					targetElementTypes: [...MASKABLE_ELEMENT_TYPES],
-				}),
+				targetElementTypes:
+					item.type === "audio" ? ["audio"] : ["video", "image"],
 			}}
 			shouldShowPlusOnDrag={false}
 			onAddToTimeline={({ currentTime }) =>
@@ -316,12 +314,27 @@ function MediaItemWithContextMenu({
 	const idsToDelete = isSelected(item.id) ? selectedIds : [item.id];
 	const deleteLabel =
 		idsToDelete.length > 1 ? `Delete ${idsToDelete.length} items` : "Delete";
+	const handleExport = (event: React.MouseEvent<HTMLDivElement>) => {
+		event.stopPropagation();
+		const objectUrl = URL.createObjectURL(item.file);
+		const anchor = document.createElement("a");
+		anchor.href = objectUrl;
+		anchor.download = item.name;
+		anchor.hidden = true;
+		document.body.append(anchor);
+		anchor.click();
+		anchor.remove();
+		window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1_000);
+		toast.success(`Exported ${item.name}`);
+	};
 
 	return (
 		<ContextMenu>
 			<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
 			<ContextMenuContent>
-				<ContextMenuItem>Export clips</ContextMenuItem>
+				<ContextMenuItem onClick={handleExport}>
+					Download original
+				</ContextMenuItem>
 				<ContextMenuItem
 					variant="destructive"
 					onClick={(event: React.MouseEvent<HTMLDivElement>) =>

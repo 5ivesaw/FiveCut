@@ -164,6 +164,11 @@ durations, hashes, analysis, or transcript timing. Use intentional effects and
 explicit export settings. Put any uncertainty in metadata.notes.
 ```
 
+For a freeze frame, create a video media clip with
+`freezeFrameSourceTime` set to an absolute source timestamp in seconds and use
+the clip `duration` as the hold length. Frozen clips are always silent. Require
+the `freeze-frame-v1` capability when the result depends on this behavior.
+
 In the FiveCut Projects screen, choose **Import AI edit**, select the returned
 JSON document, and then select the referenced media. FiveCut checks the schema,
 version, paths, hashes, capabilities, media types, source ranges, track

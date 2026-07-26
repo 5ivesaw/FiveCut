@@ -1,11 +1,11 @@
 name: Feature request
-description: Suggest an idea for OpenCut
+description: Suggest an idea for FiveCut
 title: "[FEATURE] "
 labels: enhancement
 body:
   - type: markdown
     attributes:
-      value: Please make sure that no duplicated issues has already been delivered.
+      value: Please search existing FiveCut issues before opening a duplicate.
   - type: textarea
     id: problem
     attributes:

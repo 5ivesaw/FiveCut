@@ -3,17 +3,16 @@ import Link from "next/link";
 import { GitHubContributeSection } from "@/components/gitHub-contribute-section";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import { EXTERNAL_TOOLS } from "@/lib/site/external-tools";
 import { BasePage } from "../base-page";
 
 export const metadata: Metadata = {
-	title: "Contributors - OpenCut",
+	title: "Contributors - FiveCut",
 	description:
-		"Meet the amazing people who contribute to OpenCut, the free and open-source video editor.",
+		"Meet the amazing people who contribute to FiveCut, the free and open-source video editor.",
 	openGraph: {
-		title: "Contributors - OpenCut",
+		title: "Contributors - FiveCut",
 		description:
-			"Meet the amazing people who contribute to OpenCut, the free and open-source video editor.",
+			"Meet the amazing people who contribute to FiveCut, the free and open-source video editor.",
 		type: "website",
 	},
 };
@@ -30,11 +29,11 @@ interface Contributor {
 async function getContributors(): Promise<Contributor[]> {
 	try {
 		const response = await fetch(
-			"https://api.github.com/repos/OpenCut-app/OpenCut/contributors?per_page=100",
+			"https://api.github.com/repos/5ivesaw/FiveCut/contributors?per_page=100",
 			{
 				headers: {
 					Accept: "application/vnd.github.v3+json",
-					"User-Agent": "OpenCut-Web-App",
+					"User-Agent": "FiveCut-Web-App",
 				},
 				next: { revalidate: 600 }, // 10 minutes
 			},
@@ -70,7 +69,7 @@ export default async function ContributorsPage() {
 	return (
 		<BasePage
 			title="Contributors"
-			description="Meet the amazing people who contribute to OpenCut, the free and open-source video editor."
+			description="Meet the amazing people who contribute to FiveCut, the free and open-source video editor."
 		>
 			<div className="-mt-4 flex items-center justify-center gap-8 text-sm">
 				<StatItem value={contributors.length} label="contributors" />
@@ -84,16 +83,14 @@ export default async function ContributorsPage() {
 				{otherContributors.length > 0 && (
 					<AllContributorsSection contributors={otherContributors} />
 				)}
-				<ExternalToolsSection />
 				<GitHubContributeSection
 					title="Join the community"
-					description="OpenCut is built by developers like you. Every contribution, no matter how small, helps make video editing more accessible for everyone."
+					description="FiveCut is built by developers like you. Every contribution, no matter how small, helps make video editing more accessible for everyone."
 				/>
 			</div>
 		</BasePage>
 	);
 }
-
 function StatItem({ value, label }: { value: number; label: string }) {
 	return (
 		<div className="flex items-center gap-2">
@@ -169,7 +166,7 @@ function AllContributorsSection({
 			<div className="flex flex-col gap-2 text-center">
 				<h2 className="text-2xl font-semibold">All contributors</h2>
 				<p className="text-muted-foreground">
-					Everyone who makes OpenCut better
+					Everyone who makes FiveCut better
 				</p>
 			</div>
 
@@ -199,41 +196,6 @@ function AllContributorsSection({
 								</p>
 							</div>
 						</div>
-					</Link>
-				))}
-			</div>
-		</div>
-	);
-}
-
-function ExternalToolsSection() {
-	return (
-		<div className="flex flex-col gap-10">
-			<div className="flex flex-col gap-2 text-center">
-				<h2 className="text-2xl font-semibold">External tools</h2>
-				<p className="text-muted-foreground">Tools we use to build OpenCut</p>
-			</div>
-
-			<div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
-				{EXTERNAL_TOOLS.map((tool, index) => (
-					<Link
-						key={tool.url}
-						href={tool.url}
-						target="_blank"
-						className="block"
-						style={{ animationDelay: `${index * 100}ms` }}
-					>
-						<Card className="h-full">
-							<CardContent className="flex items-center justify-center h-full flex-col gap-4 p-6 text-center">
-								<tool.icon className="size-8" />
-								<div className="flex flex-1 flex-col gap-2">
-									<h3 className="text-lg font-semibold">{tool.name}</h3>
-									<p className="text-muted-foreground text-sm">
-										{tool.description}
-									</p>
-								</div>
-							</CardContent>
-						</Card>
 					</Link>
 				))}
 			</div>

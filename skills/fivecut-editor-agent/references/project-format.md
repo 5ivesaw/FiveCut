@@ -17,6 +17,9 @@ Use the canonical schemas:
 - Keep source ranges within the probed asset duration.
 - Keep transition duration at or below half the clip duration.
 - Keep keyframe times relative to clip start and within clip duration.
+- Use `freezeFrameSourceTime` for a silent held video frame. It is an absolute
+  source timestamp, must be strictly before the asset end, and requires the
+  `freeze-frame-v1` capability.
 
 ## Recommended directory
 

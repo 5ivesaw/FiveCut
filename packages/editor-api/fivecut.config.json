@@ -14,6 +14,7 @@
     "ffmpeg-render-v1",
     "captions-v1",
     "keyframes-v1",
-    "color-grade-v1"
+    "color-grade-v1",
+    "freeze-frame-v1"
   ]
 }

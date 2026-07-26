@@ -27,7 +27,10 @@ import {
 	type BackdropSource,
 	type ResolvedBlurBackgroundNodeState,
 } from "./nodes/blur-background-node";
-import { EffectLayerNode, type ResolvedEffectLayerNodeState } from "./nodes/effect-layer-node";
+import {
+	EffectLayerNode,
+	type ResolvedEffectLayerNodeState,
+} from "./nodes/effect-layer-node";
 import {
 	GraphicNode,
 	type ResolvedGraphicNodeState,
@@ -193,11 +196,12 @@ async function resolveVideoNode({
 	}
 
 	const sourceTimeTicks =
+		node.params.freezeFrameSourceTime ??
 		node.params.trimStart +
-		getSourceTimeAtClipTime({
-			clipTime,
-			retime: node.params.retime,
-		});
+			getSourceTimeAtClipTime({
+				clipTime,
+				retime: node.params.retime,
+			});
 	const frame = await videoCache.getFrameAt({
 		mediaId: node.params.mediaId,
 		file: node.params.file,
@@ -232,7 +236,10 @@ async function resolveImageNode({
 	node: ImageNode;
 	context: ResolveContext;
 }): Promise<ResolvedVisualSourceNodeState | null> {
-	const source = await loadImageSource(node.params.url, node.params.maxSourceSize);
+	const source = await loadImageSource(
+		node.params.url,
+		node.params.maxSourceSize,
+	);
 	const visualState = resolveVisualState({
 		params: node.params,
 		context,
@@ -407,11 +414,12 @@ async function resolveBackdropSource({
 }): Promise<BackdropSource | null> {
 	if (node.params.mediaType === "video") {
 		const sourceTimeTicks =
+			node.params.freezeFrameSourceTime ??
 			node.params.trimStart +
-			getSourceTimeAtClipTime({
-				clipTime,
-				retime: node.params.retime,
-			});
+				getSourceTimeAtClipTime({
+					clipTime,
+					retime: node.params.retime,
+				});
 		const frame = await videoCache.getFrameAt({
 			mediaId: node.params.mediaId,
 			file: node.params.file,

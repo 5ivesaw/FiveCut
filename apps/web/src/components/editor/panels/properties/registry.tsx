@@ -191,13 +191,14 @@ function getVideoConfig({
 	element: VideoElement;
 	mediaAsset: MediaAsset | undefined;
 }): ElementPropertiesConfig {
-	const showAudioTab = mediaAsset?.hasAudio !== false;
+	const isFreezeFrame = element.freezeFrameSourceTime !== undefined;
+	const showAudioTab = !isFreezeFrame && mediaAsset?.hasAudio !== false;
 	return {
 		defaultTab: "transform",
 		tabs: [
 			buildTransformTab({ element }),
 			...(showAudioTab ? [buildAudioTab({ element })] : []),
-			buildSpeedTab({ element }),
+			...(!isFreezeFrame ? [buildSpeedTab({ element })] : []),
 			buildBlendingTab({ element }),
 			buildMasksTab({ element }),
 			buildClipEffectsTab({ element }),

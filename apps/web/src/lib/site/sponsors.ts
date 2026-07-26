@@ -8,17 +8,11 @@ export type Sponsor = {
 
 export const SPONSORS: Sponsor[] = [
 	{
-		name: "Fal.ai",
-		url: "https://fal.ai?utm_source=opencut",
-		logo: "/logos/others/fal.svg",
-		description: "Generative image, video, and audio models all in one place.",
-		invertOnDark: true,
-	},
-	{
-		name: "Vercel",
-		url: "https://vercel.com?utm_source=opencut",
-		logo: "/logos/others/vercel.svg",
-		description: "Platform where we deploy and host OpenCut.",
+		name: "OpenCut",
+		url: "https://github.com/OpenCut-app/OpenCut",
+		logo: "/logos/opencut/icon.svg",
+		description:
+			"The open-source editor FiveCut was forked from and continues to credit.",
 		invertOnDark: true,
 	},
 ];

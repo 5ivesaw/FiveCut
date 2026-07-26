@@ -1,28 +1,20 @@
-# Security Policy
+# FiveCut security policy
 
-## Supported Versions
+## Supported versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
+The newest published FiveCut release receives security fixes. Older early
+releases may require upgrading.
 
-## Reporting a Vulnerability
+## Report a vulnerability privately
 
-We take security vulnerabilities seriously. If you discover a security vulnerability within OpenCut, please send an email to security@opencut.app. All security vulnerabilities will be promptly addressed.
+Do not open a public issue. Use GitHub's
+[private vulnerability report](https://github.com/5ivesaw/FiveCut/security/advisories/new)
+and include:
 
-Please do not report security vulnerabilities through public GitHub issues.
+- the affected version and platform;
+- reproduction steps or a minimal proof of concept;
+- the expected impact;
+- any suggested mitigation.
 
-### What to include in your report
-
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Any suggested fixes
-
-### Response timeline
-
-- We will acknowledge receipt within 48 hours
-- We will provide a detailed response within 5 business days
-- We will keep you updated on our progress
-
-Thank you for helping keep OpenCut secure!
+Do not include private media, credentials, or personal data unless it is
+strictly necessary to reproduce the issue.
