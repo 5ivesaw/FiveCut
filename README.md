@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz"><strong>Download FiveCut for Linux</strong></a>
+  <a href="https://github.com/5ivesaw/FiveCut/releases/download/v0.2.0/FiveCut-linux-x64.tar.gz"><strong>Download FiveCut for Linux</strong></a>
   ·
   <a href="https://5ivesaw.github.io/FiveCut/">Visit the website</a>
   ·
@@ -48,7 +48,7 @@
 
 ## Download and launch
 
-Download [`FiveCut-linux-x64.tar.gz`](https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz), then run:
+Download [`FiveCut-linux-x64.tar.gz`](https://github.com/5ivesaw/FiveCut/releases/download/v0.2.0/FiveCut-linux-x64.tar.gz), then run:
 
 ```bash
 tar -xzf FiveCut-linux-x64.tar.gz
@@ -61,7 +61,11 @@ The archive includes its own Electron runtime and local FiveCut server. Run
 application-menu entry.
 
 Verify the download with the
-[published SHA-256 file](https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz.sha256).
+[published SHA-256 file](https://github.com/5ivesaw/FiveCut/releases/download/v0.2.0/FiveCut-linux-x64.tar.gz.sha256).
+
+```bash
+sha256sum --check FiveCut-linux-x64.tar.gz.sha256
+```
 
 ## External AI editing
 

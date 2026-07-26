@@ -1,19 +1,19 @@
 const FALLBACK_RELEASE = {
-	tag: "v0.1.0",
+	tag: "v0.2.0",
 	publishedAt: "2026-07-26T09:30:08Z",
 	downloadUrl:
-		"https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz",
+		"https://github.com/5ivesaw/FiveCut/releases/download/v0.2.0/FiveCut-linux-x64.tar.gz",
 	checksumUrl:
-		"https://github.com/5ivesaw/FiveCut/releases/download/v0.1.0/FiveCut-linux-x64.tar.gz.sha256",
+		"https://github.com/5ivesaw/FiveCut/releases/download/v0.2.0/FiveCut-linux-x64.tar.gz.sha256",
 	size: 178_694_142,
-	releaseUrl: "https://github.com/5ivesaw/FiveCut/releases/tag/v0.1.0",
+	releaseUrl: "https://github.com/5ivesaw/FiveCut/releases/tag/v0.2.0",
 };
 
 const RELEASE_API =
 	"https://api.github.com/repos/5ivesaw/FiveCut/releases/latest";
 
 function formatBytes(bytes) {
-	if (!Number.isFinite(bytes) || bytes <= 0) return "170 MB";
+	if (!Number.isFinite(bytes) || bytes <= 0) return "178 MB";
 	const megabytes = bytes / 1024 / 1024;
 	return `${megabytes >= 100 ? Math.round(megabytes) : megabytes.toFixed(1)} MB`;
 }

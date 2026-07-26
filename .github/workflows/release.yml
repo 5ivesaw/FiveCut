@@ -138,8 +138,11 @@ jobs:
         run: |
           set -euo pipefail
           tar -C release -czf release/FiveCut-linux-x64.tar.gz FiveCut
-          sha256sum release/FiveCut-linux-x64.tar.gz \
-            > release/FiveCut-linux-x64.tar.gz.sha256
+          (
+            cd release
+            sha256sum FiveCut-linux-x64.tar.gz \
+              > FiveCut-linux-x64.tar.gz.sha256
+          )
 
       - uses: actions/upload-artifact@v4
         with:
